@@ -76,6 +76,11 @@ function HomeScreen({ route, navigation }: Props) {
           <Text style={styles.buttonText}>Istoric Medical</Text>
         </TouchableOpacity>
       }
+      {
+        userState == "Pacient" && <TouchableOpacity onPress={() => nav.push("DisplayPhotosToChoose")} style={[styles.button, styles.googleButton]}>
+        <Text style={styles.buttonText}>CameraRoll</Text>
+      </TouchableOpacity>
+    }
 
       {
         userState == "Doctor" && <TouchableOpacity onPress={() => nav.push("FormularOrReteta")} style={[styles.button, styles.googleButton]}>

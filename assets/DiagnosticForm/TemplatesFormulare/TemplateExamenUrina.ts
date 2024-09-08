@@ -1,4 +1,4 @@
-import PutjsonOnStorageForDebug from "../../FilesThatGetUsersStorageData/PutjsonOnStorageForDebug"
+import PutjsonOnStorageForDebug from "../../PutjsonOnStorageForDebug"
 import FromNestedToLinear from "../TransformerFunctions/FromNestedToLinear"
 
 const TemplateExamenUrina = (assignedID:string,InputsLined:any, changeInputslined:any) =>{

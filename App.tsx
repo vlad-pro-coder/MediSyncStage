@@ -20,6 +20,7 @@ import FrameForQRcodeGeneration from './assets/QRcodeGenANDscan/FrameForQRcodeGe
 import ChatBotScreen from './assets/ChatBot/chatBotScreen';
 import FrameForQRcodeScanner from './assets/QRcodeGenANDscan/FrameForQRcodeScanning';
 import PrintIstoricWithLabels from './assets/IstoricMedical/PrintIstoricWithLabels';
+import DisplayPhotosToChoose from './assets/testcameraroll/DisplayPhotosToChoose';
 
 // TODO: Replace the following with your app's Firebase project configuration
 const firebaseConfig = {
@@ -49,6 +50,7 @@ type RootStackParamList = {
   CalendarScreen: undefined;
   ChatBotScreen: undefined;
   IstoricMedicalQRscanner: undefined;
+  DisplayPhotosToChoose:undefined,
 };
 
 const RootStack = createStackNavigator<RootStackParamList>();
@@ -72,6 +74,7 @@ function App() {
         <RootStack.Screen name="CalendarScreen" component={CalendarScreen} />
         <RootStack.Screen name="ChatBotScreen" component={ChatBotScreen} />
         <RootStack.Screen name="IstoricMedicalQRscanner" component={FrameForQRcodeScanner}/>
+        <RootStack.Screen name="DisplayPhotosToChoose" component={DisplayPhotosToChoose}/>
       </RootStack.Navigator>
     </NavigationContainer>
   );
