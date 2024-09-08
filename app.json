@@ -1,0 +1,58 @@
+{
+  "expo": {
+    "name": "MediSync",
+    "slug": "dpit",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "googleServicesFile": "./GoogleService-Info.plist",
+      "bundleIdentifier": "com.medsupport.medisync"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "googleServicesFile": "./google-services.json",
+      "package": "com.medsupport.medisync",
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow medisync to access your camera."
+        }
+      ],
+      "@react-native-firebase/app",
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "useFrameworks": "static"
+          }
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "6c6f68be-8d71-4fd3-aa63-fa008fa6c12d"
+      }
+    },
+    "owner": "no0byeby"
+  }
+}
