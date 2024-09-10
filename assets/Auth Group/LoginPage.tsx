@@ -10,7 +10,7 @@ const LoginScreen = () => {
   const nav = useNavigation<NativeStackNavigationProp<any>>();
 
   // some useState variables for the input fields
-  const [email, setEmail] = useState("cineva@gmail.com");
+  const [email, setEmail] = useState("c@gmail.com");
   const [password, setPassword] = useState("123456");
 
   const goToMainFlow = async () => {

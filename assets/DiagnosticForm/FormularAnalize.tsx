@@ -10,17 +10,21 @@ import TemplateHematologie from './TemplatesFormulare/TemplateHematologie';
 import TemplateBiochimie from './TemplatesFormulare/TemplateBiochimie';
 import TemplateExamenUrina from './TemplatesFormulare/TemplateExamenUrina';
 import TemplateImunologie from './TemplatesFormulare/TemplateImunologie';
+import NewImageObj from './inputObjects/ImageObj';
+import ImagePickerfunc from './ImagePickerUri';
 
 const Formular = ({ prop }: any) => {
     const [counter, changeCounter] = useState(0)
+    const [ImgCounter,changeImgcounter] = useState(0)
     const [activeBtn, changeBtn] = useState<boolean>(true)
 
-    const { InputsLined, changeInputslined, titlu, changeTitlu } = prop
+    const { InputsLined, changeInputslined, titlu, changeTitlu, ListaImageUris, changeListaImageUris } = prop
     //inputs strcuture[]:
         ///text structure: {id:code,value:string}
         ///paragraf structure: {id:code,masterText:string,value:[]}
         ///boolean structure: {id:code,valuebool:boolean,valuetext:string}
         ///linear inputs structure: {id:code,value:string[]}
+        ///image display structure: {id:code, ithURI:number}
     //
     //InputsLined strcuture[]:
         //text structure: {id:code,value:string}
@@ -49,6 +53,16 @@ const Formular = ({ prop }: any) => {
         changeCounter(counter + 1)
         const code: string = "4" + counter
         changeInputslined([...InputsLined, { id: code, value: [''] }])
+    }
+    const addImageHandler = async () =>{
+        const uriOfImage:string = await ImagePickerfunc()
+        if(uriOfImage === "error try again")
+            return 0;
+        changeCounter(counter + 1)
+        const code: string = "5" + counter
+        changeInputslined([...InputsLined,{id:code, ithURI:ImgCounter}])
+        changeImgcounter(ImgCounter+1)
+        changeListaImageUris([...ListaImageUris,uriOfImage])
     }
 
     const HandleAddParagrafText = (NewID:string,pozParent:number) =>{
@@ -147,6 +161,20 @@ const Formular = ({ prop }: any) => {
             return IdParent !== id
         }));
     };
+    const deleteImageHandler = (id:string,ithElem:number) =>{
+        let diff = 0
+        const newInputs = InputsLined.map((input:any)=>{
+            if(input.id[0] === "5")
+                input.ithURI -= diff
+            if(input.id === id)
+                diff = 1
+            return input
+        })
+        changeInputslined(newInputs)
+        ListaImageUris.splice(ithElem,1)
+        changeListaImageUris(ListaImageUris)
+        changeImgcounter(ImgCounter-1)
+    }
 
     return (
         <View style={styles.container}>
@@ -169,6 +197,9 @@ const Formular = ({ prop }: any) => {
                     </TouchableOpacity>
                     <TouchableOpacity onPress={addLinearInputsHandler} style={styles.actionBtnstyle}>
                         <Text style={[styles.textCenter,{fontSize:15}]}>Texte Liniare</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={addImageHandler} style={styles.actionBtnstyle}>
+                        <Text style={[styles.textCenter,{fontSize:15}]}>Imagine</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => {
                         changeCounter(counter + 1)
@@ -218,10 +249,14 @@ const Formular = ({ prop }: any) => {
                             {item.id[0] == "2" ? <NewParagraf prop={{obj:item,poz:index,handleInputChange:handleInputChange,handleAnyLinearInputsChange:handleAnyLinearInputsChange,HandleAddLinearInput:HandleAddLinearInput,HandlePopLastInputLinear:HandlePopLastInputLinear,HandleAddParagrafText:HandleAddParagrafText,HandleAddParagrafLiniarText:HandleAddParagrafLiniarText,HandleParagrafAnyInputDeletion:HandleParagrafAnyInputDeletion}}/>:''}
                             {item.id[0] == "3" ? <NewBooleanInput prop={{ valuebool: item.valuebool, valuetext: item.valuetext, id: item.id, handleBooleanChange: handleBooleanChange, handleBooleanTextChange: handleBooleanTextChange }} /> : ''}
                             {item.id[0] == "4" ? <NewLinearInputsObj prop={{ index: index, values: item.value, id: item.id, handleAnyLinearInputsChange: handleAnyLinearInputsChange, HandleAddLinearInput: HandleAddLinearInput, HandlePopLastInputLinear: HandlePopLastInputLinear }} /> : ''}
+                            {item.id[0] == "5" ? <NewImageObj prop={{index:index, uri:ListaImageUris[item.ithURI]}}/>:''}
                             
                             {item.id.indexOf('/') === -1?<TouchableOpacity
                                 style={styles.deleteButton}
-                                onPress={() => deleteInputHandler(item.id)}
+                                onPress={() => {
+                                    if(item.id[0] == "5")
+                                        deleteImageHandler(item.id,item.ithURI)
+                                    deleteInputHandler(item.id)}}
                             >
                                 <Text style={styles.deleteButtonText}>X</Text>
                             </TouchableOpacity>:<></>}

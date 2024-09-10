@@ -25,6 +25,7 @@ const ChooseWhich = ({ email }: any) => {
     const nav = useNavigation<NativeStackNavigationProp<any>>();
 
     const [PrescriptionOrForm, changePrescriptionOrForm] = useState<boolean>(false)
+    const [ListaImageUris,changeListaImageUris] = useState<string[]>([])
     const [titlu, changeTitlu] = useState('')
     const [inputsFormular, setInputsFormular] = useState<object[]>([]);
     const [inputsReteta, setInputsReteta] = useState<object[]>([
@@ -55,6 +56,8 @@ const ChooseWhich = ({ email }: any) => {
                     , changeInputslined: setInputsFormular
                     , titlu: titlu
                     , changeTitlu: changeTitlu
+                    , ListaImageUris:ListaImageUris
+                    , changeListaImageUris:changeListaImageUris
                 }} />
                 : <Prescriptie prop={{
                     inputs: inputsReteta
