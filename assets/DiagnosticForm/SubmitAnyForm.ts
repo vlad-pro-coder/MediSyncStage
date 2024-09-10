@@ -2,7 +2,7 @@ import {getStorage,ref, uploadBytes} from 'firebase/storage'
 import { getApp } from 'firebase/app'
 import ConvertTimeToString from '../ConvertTimeToString'
 
-const SubmitAnyForm = ({inputs,titlu,PrescriptionOrForm,email,RetetaPathSpecific}:any) =>{
+const SubmitAnyForm = ({inputs,titlu,PrescriptionOrForm,email,RetetaPathSpecific,cod}:any) =>{
     const app = getApp()
     const storage = getStorage(app,'gs://medisync-4ec40.appspot.com')
 
@@ -12,7 +12,7 @@ const SubmitAnyForm = ({inputs,titlu,PrescriptionOrForm,email,RetetaPathSpecific
 
     if(PrescriptionOrForm===false)
     {
-        path = path.concat(`/${ConvertTimeToString()}/formular.json`)
+        path = path.concat(`/${cod}/formular.json`)
         const RefFormular = ref(storage,path)
         uploadBytes(RefFormular,blobfile).then((snapshot)=>{console.log(snapshot)})
     }

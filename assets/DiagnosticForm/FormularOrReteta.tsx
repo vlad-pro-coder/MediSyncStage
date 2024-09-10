@@ -8,6 +8,8 @@ import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import FromLinearToNested from "./TransformerFunctions/FromLinearToNested";
 import ModalSelectorWithLabels from "./ModalSelector/ModalSelectorWithLabels";
+import StoreImportedImages from "./StoreImportedImages";
+import ConvertTimeToString from "../ConvertTimeToString";
 
 const GetCurrDate = () => {
     let currTime = new Date()
@@ -70,7 +72,9 @@ const ChooseWhich = ({ email }: any) => {
         <View style={{ height: '8%', backgroundColor: formularBackground }}>
             <TouchableOpacity style={styles.submit} onPress={() => {
                 if (PrescriptionOrForm === false) {
-                    SubmitAnyForm({ inputs: FromLinearToNested(inputsFormular), titlu: titlu, PrescriptionOrForm: PrescriptionOrForm, email: email })
+                    const codForm = ConvertTimeToString()
+                    SubmitAnyForm({ inputs: FromLinearToNested(inputsFormular), titlu: titlu, PrescriptionOrForm: PrescriptionOrForm, email: email,cod:codForm })
+                    StoreImportedImages({ListaURIs:ListaImageUris,email,cod:codForm})
                 }
                 else
                     ChangeModalState(true)
