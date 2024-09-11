@@ -9,7 +9,6 @@ import { formularButtonSubmit } from "../color"
 
 const AfiseazaReteteTreptatIstoric = ({ DataToPrint }: any) => {
     const { Retete, DeleteMode, changeFormularANDRetete, ComponentFormularANDRetete } = DataToPrint
-    console.log(Retete)
     const [nrReteteDeAfisat, changeNrAfisare] = useState<number>(0)
 
 

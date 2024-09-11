@@ -39,8 +39,6 @@ const PrintIstoricWithLabels = ({ route }: { route: any }) => {
         UserPathsChange(newPaths)
     }
 
-    console.log(UserPaths)
-
     return <View style={{ backgroundColor: 'white', height: '100%' }}>
         <Modal
             visible={showModal}
@@ -70,7 +68,6 @@ const PrintIstoricWithLabels = ({ route }: { route: any }) => {
                         <TouchableOpacity style={styles.BTNstyle} onPress={() => {
                             changeChosenPath(folder)
                             changeShowModal(true)
-                            console.log("ceva")
                         }}>
                             <Text style={{ textAlign: 'center' }}>Afiseza</Text>
                         </TouchableOpacity>

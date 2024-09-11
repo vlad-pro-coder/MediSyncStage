@@ -5,16 +5,19 @@ import { StyleSheet, View } from 'react-native';
 import TemporaryAfiseazaReteteTreptat from './TemporaryAfiseazaReteteTreptar';
 import GetInfoIstoricUser from '../../FilesThatGetUsersStorageData/GetInfoIstoricUser';
 import { formularBackground, formularButtonSubmit } from '../../color';
+import GetFormularsDependentPhotos from '../../FilesThatGetUsersStorageData/GetFormularsDependentPhotos';
 
 const TemporaryDataDisplay = ({prop}:any) => {
 
     const {chosenPath} = prop
 
     const [ComponentFormularANDRetete, changeFormularANDRetete] = useState<any>({})
+    const [PhotosURIs,ChangePhotoURIs] = useState<string[]>([])
 
     useEffect(() => {
         const fetchPaths = async () => {
             changeFormularANDRetete(await GetInfoIstoricUser(chosenPath))
+            ChangePhotoURIs(await GetFormularsDependentPhotos(chosenPath))
         }
         fetchPaths()
     }, []);

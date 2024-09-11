@@ -8,6 +8,7 @@ import DeleteGivenPath from './DeleteGivenPath';
 import GetInfoIstoricUser from '../FilesThatGetUsersStorageData/GetInfoIstoricUser';
 import GeneratePDF from '../PDFgeneratorFormular/PDFgenerator';
 import { formularBackground, formularButtonSubmit } from '../color';
+import GetFormularsDependentPhotos from '../FilesThatGetUsersStorageData/GetFormularsDependentPhotos';
 
 const GetDataForUserIstoricMedical = ({prop}:any) => {
 
@@ -15,6 +16,8 @@ const GetDataForUserIstoricMedical = ({prop}:any) => {
 
     const [ComponentFormularANDRetete, changeFormularANDRetete] = useState<any>({})
     const [DeleteMode, changeDeleteMode] = useState<boolean>(false)
+    const [PhotosURIs,ChangePhotoURIs] = useState<string[]>([])
+
 
     const DeleteWholeFormularComponent = (pathIdent: string) => {
         const NewComponentFormularANDRetete = ComponentFormularANDRetete.Retete.filter((component: any) => {
@@ -26,6 +29,7 @@ const GetDataForUserIstoricMedical = ({prop}:any) => {
     useEffect(() => {
         const fetchPaths = async () => {
             changeFormularANDRetete(await GetInfoIstoricUser(chosenPath))
+            ChangePhotoURIs(await GetFormularsDependentPhotos(chosenPath))
         }
         fetchPaths()
     }, []);
@@ -64,7 +68,7 @@ const GetDataForUserIstoricMedical = ({prop}:any) => {
                     <View style={[styles.FormANDRetete,{ width: (DeleteMode === false ? '100%' : '91%') }]}>
                         <View>
                             <View style={{ width: '100%', backgroundColor: 'white', borderRadius: 30, paddingLeft: 5 }}>
-                                <PrintComponentFormular DataToPrint={{ masterInputs: formular}} />
+                                <PrintComponentFormular DataToPrint={{ masterInputs: formular, photosURIs:PhotosURIs}} />
                             </View>
 
                             {DeleteMode === false?<TouchableOpacity style={styles.PDFbtnstyle} onPress={() => { GeneratePDF(formular) }}>

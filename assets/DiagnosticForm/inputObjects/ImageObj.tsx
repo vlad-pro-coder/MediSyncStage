@@ -14,8 +14,8 @@ const {index,uri} = prop
 
   const screenWidth = Dimensions.get('window').width;
   const screenHeight = Dimensions.get('window').height;
-  const maxImageWidth = screenWidth * 0.8; // 90% of screen width
-  const maxImageHeight = screenHeight * 0.8; // 90% of screen height
+  const maxImageWidth = screenWidth * 0.8; // 80% of screen width
+  const maxImageHeight = screenHeight * 0.8; // 80% of screen height
 
   let displayWidth = imageDimensions.width;
   let displayHeight = imageDimensions.height;

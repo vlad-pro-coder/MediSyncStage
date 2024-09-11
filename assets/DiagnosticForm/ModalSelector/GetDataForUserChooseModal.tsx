@@ -5,16 +5,19 @@ import { StyleSheet, View } from 'react-native';
 import GetInfoIstoricUser from '../../FilesThatGetUsersStorageData/GetInfoIstoricUser';
 import { formularBackground, formularButtonSubmit } from '../../color';
 import AfiseazaReteteTreptat from './AfiseazaReteteTreptar';
+import GetFormularsDependentPhotos from '../../FilesThatGetUsersStorageData/GetFormularsDependentPhotos';
 
 const GetDataForUserChooseModal = ({prop}:any) => {
 
     const {chosenPath} = prop
 
     const [ComponentFormularANDRetete, changeFormularANDRetete] = useState<any>({})
+    const [PhotosURIs,ChangePhotoURIs] = useState<string[]>([])
 
     useEffect(() => {
         const fetchPaths = async () => {
             changeFormularANDRetete(await GetInfoIstoricUser(chosenPath))
+            ChangePhotoURIs(await GetFormularsDependentPhotos(chosenPath))
         }
         fetchPaths()
     }, []);

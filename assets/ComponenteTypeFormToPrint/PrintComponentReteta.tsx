@@ -1,6 +1,5 @@
 import React from "react"
 import {Text, View,StyleSheet } from "react-native"
-import {formularBackground} from '../color'
 
 /*[
     {id:'unitate',val:''},{id:'serie',val:''},{id:'nr',val:''},{id:'DateP',val:''}
