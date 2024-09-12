@@ -50,7 +50,7 @@ type RootStackParamList = {
   CalendarScreen: undefined;
   ChatBotScreen: undefined;
   IstoricMedicalQRscanner: undefined;
-  DisplayPhotosToChoose:undefined,
+  DisplayPhotosToChoose:{email:''},
 };
 
 const RootStack = createStackNavigator<RootStackParamList>();
@@ -74,7 +74,7 @@ function App() {
         <RootStack.Screen name="CalendarScreen" component={CalendarScreen} />
         <RootStack.Screen name="ChatBotScreen" component={ChatBotScreen} />
         <RootStack.Screen name="IstoricMedicalQRscanner" component={FrameForQRcodeScanner}/>
-        <RootStack.Screen name="DisplayPhotosToChoose" component={DisplayPhotosToChoose}/>
+        <RootStack.Screen name="DisplayPhotosToChoose" component={DisplayPhotosToChoose} initialParams={{ email: ''}}/>
       </RootStack.Navigator>
     </NavigationContainer>
   );

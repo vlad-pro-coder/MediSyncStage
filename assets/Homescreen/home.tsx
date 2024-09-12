@@ -77,7 +77,7 @@ function HomeScreen({ route, navigation }: Props) {
         </TouchableOpacity>
       }
       {
-        userState == "Pacient" && <TouchableOpacity onPress={() => nav.push("DisplayPhotosToChoose")} style={[styles.button, styles.googleButton]}>
+        userState == "Pacient" && <TouchableOpacity onPress={() => nav.push("DisplayPhotosToChoose", { email: UserEmail })} style={[styles.button, styles.googleButton]}>
         <Text style={styles.buttonText}>CameraRoll</Text>
       </TouchableOpacity>
     }
