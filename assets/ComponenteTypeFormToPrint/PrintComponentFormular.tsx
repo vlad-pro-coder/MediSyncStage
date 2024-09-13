@@ -15,11 +15,11 @@ const PrintComponentFormular = ({ DataToPrint }: any) => {
 
     useEffect(() => {
         const fetchSizes = async () => {
-            let aux: IMGinfo[] = [];
-            const sizePromises = photosURIs.map((uri: string) => {
+        let aux: any = {}
+            const sizePromises = photosURIs.map((uri: string,index:number) => {
                 return new Promise<void>((resolve, reject) => {
                     Image.getSize(uri, (width, height) => {
-                        aux.push({ height, width });
+                        aux[index] = { height, width };
                         resolve();
                     }, reject);
                 });
@@ -97,7 +97,7 @@ const PrintComponentFormular = ({ DataToPrint }: any) => {
 
 
     return <View style={{ width: '100%', paddingLeft: 5, paddingRight: 5 }} onLayout={handleLayout}>
-        <Text style={{ textAlign: 'center' }}>{titlu}</Text>
+        <Text style={{ textAlign: 'center' ,marginBottom:10,fontSize:17}}>{titlu}</Text>
         {inputs.map((obj: any, index: number) => {
             const { id } = obj
             if (id[0] === "1")

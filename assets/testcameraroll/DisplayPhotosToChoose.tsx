@@ -7,6 +7,8 @@ import DefaultDisplay from './PhotosDisplays/DefaultDisplay';
 import FormSelectedDisplay from './PhotosDisplays/FormSelectedDisplay';
 import RetetaSelectedDisplay from './PhotosDisplays/RetetaSelectedDisplay';
 import SubmitPhotos from './SubmitPhotos';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native';
 
 interface Photo {
   id: string;
@@ -14,6 +16,8 @@ interface Photo {
 }
 
 const DisplayPhotosToChoose = ({ route }: { route: any }) => {
+
+  const nav = useNavigation<NativeStackNavigationProp<any>>();
 
   const email = route.params.email
 
@@ -119,7 +123,10 @@ const DisplayPhotosToChoose = ({ route }: { route: any }) => {
         />
       </View>
       <View style={{height:'8%',justifyContent:'center'}}>
-        <TouchableOpacity style={styles.submit} onPress={()=>{SubmitPhotos({titlu,URIs,email})}}>
+        <TouchableOpacity style={styles.submit} onPress={()=>{
+          SubmitPhotos({titlu,URIs,email})
+          nav.pop()
+      }}>
           <Text style={styles.textstyle}>Creeaza Formular</Text>
         </TouchableOpacity>
       </View>

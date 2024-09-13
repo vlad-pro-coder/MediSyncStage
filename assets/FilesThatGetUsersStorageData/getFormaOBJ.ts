@@ -3,6 +3,10 @@ import { getDownloadURL, StorageReference } from "firebase/storage"
 const getFormaOBJ = async (RefFile: StorageReference) => {
 
     let FormaOBJ: any = {}
+    if(RefFile.fullPath.indexOf('.photo') !== -1)
+        FormaOBJ = {uri:await getDownloadURL(RefFile)}
+    else
+    {
     await getDownloadURL(RefFile)
         .then(async (url) => {
 
@@ -21,6 +25,7 @@ const getFormaOBJ = async (RefFile: StorageReference) => {
         .catch((error) => {
             console.log(error)
         })
+    }
 
     return FormaOBJ
 }

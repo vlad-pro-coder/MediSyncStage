@@ -75,6 +75,7 @@ const ChooseWhich = ({ email }: any) => {
                     const codForm = ConvertTimeToString()
                     SubmitAnyForm({ inputs: FromLinearToNested(inputsFormular), titlu: titlu, PrescriptionOrForm: PrescriptionOrForm, email: email,cod:codForm })
                     StoreImportedImages({ListaURIs:ListaImageUris,email,cod:codForm})
+                    nav.pop()
                 }
                 else
                     ChangeModalState(true)
@@ -100,6 +101,7 @@ const ChooseWhich = ({ email }: any) => {
                         style={styles.modalBTN}
                         onPress={() => {
                             SubmitAnyForm({ inputs: inputsReteta, titlu: 'PRESCRIPȚIE MEDICALĂ', PrescriptionOrForm: PrescriptionOrForm, email: email, RetetaPathSpecific: pathRetetaStorage })
+                            nav.pop()
                         }}
                     >
                         <Text style={{textAlign:'center',fontSize:17}}>Adaugati subscriptia</Text>

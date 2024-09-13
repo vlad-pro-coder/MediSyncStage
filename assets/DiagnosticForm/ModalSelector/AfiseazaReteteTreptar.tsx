@@ -3,6 +3,7 @@ import { useState } from "react"
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import PrintComponentReteta from "../../ComponenteTypeFormToPrint/PrintComponentReteta"
 import { formularButtonSubmit } from "../../color"
+import PrintComponentaRetetaPhoto from "../../ComponenteTypeFormToPrint/PrintComponentaRetetaPhoto"
 
 
 const AfiseazaReteteTreptat = ({ DataToPrint }: any) => {
@@ -28,8 +29,10 @@ const AfiseazaReteteTreptat = ({ DataToPrint }: any) => {
                     if (index < nrReteteDeAfisat)
                         return <View style={{ flex: 1, flexDirection: 'row' }} id={`${index}`}>
                             <View style={{ flex: 1, flexDirection: 'row', marginBottom: 15 }}>
-                                <View style={{ backgroundColor: 'white', borderRadius: 30 }}>
-                                    <PrintComponentReteta DataToPrint={{ masterInputs: value }} />
+                                <View style={{ borderRadius:30,width:'80%' }}>
+                                {value.uri===undefined?
+                                    <PrintComponentReteta DataToPrint={{ masterInputs: value }} />:
+                                    <PrintComponentaRetetaPhoto prop={{uri:value.uri}} />}
                                 </View>
 
                             </View>

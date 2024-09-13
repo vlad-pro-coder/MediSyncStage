@@ -34,7 +34,7 @@ const GetDataForUserChooseModal = ({prop}:any) => {
                     <View style={[styles.FormANDRetete,{ width: '100%' }]}>
                         <View>
                             <View style={{ width: '100%', backgroundColor: 'white', borderRadius: 30, paddingLeft: 5 }}>
-                                <PrintComponentFormular DataToPrint={{ masterInputs: formular}} />
+                            <PrintComponentFormular DataToPrint={{ masterInputs: formular, photosURIs:PhotosURIs}} />
                             </View>
                         </View>
 

@@ -13,7 +13,7 @@ const PrintComponentReteta = ({ DataToPrint }: any) => {
     const { masterInputs} = DataToPrint
     const {titlu,inputs} = masterInputs
 
-    return <View style={[styles.container,{width:'80%',alignSelf:'center'}]}>
+    return <View style={[styles.container,{alignSelf:'center'}]}>
         <View id="Unitate Sanitara && Data" style={{flex:1,flexDirection:'row'}}>
             <View id="Unitate Sanitara" style={{width:'50%'}}>
                 <Text id="1" style={styles.deffont}>Unitate Sanitară:</Text>
@@ -79,10 +79,9 @@ const PrintComponentReteta = ({ DataToPrint }: any) => {
 
 const styles = StyleSheet.create({
     container:{
-        paddingLeft:7,
-        paddingBottom:10,
-        paddingTop:10,
+        padding:15,
         backgroundColor:'white',
+        borderRadius:30,
     },
     sameline:{
         flex:1,

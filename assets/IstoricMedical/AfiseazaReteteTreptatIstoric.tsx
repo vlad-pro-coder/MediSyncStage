@@ -5,6 +5,7 @@ import PrintComponentReteta from "../ComponenteTypeFormToPrint/PrintComponentRet
 import DeleteGivenPath from "./DeleteGivenPath"
 import GeneratePDF from "../PDFgeneratorReteta/PDFgenerator"
 import { formularButtonSubmit } from "../color"
+import PrintComponentaRetetaPhoto from "../ComponenteTypeFormToPrint/PrintComponentaRetetaPhoto"
 
 
 const AfiseazaReteteTreptatIstoric = ({ DataToPrint }: any) => {
@@ -50,8 +51,10 @@ const AfiseazaReteteTreptatIstoric = ({ DataToPrint }: any) => {
                                 <></>
                             }
                             <View style={{flex:1,flexDirection:'row',marginBottom:15}}>
-                                <View style={{backgroundColor:'white',borderRadius:30}}>
-                                    <PrintComponentReteta DataToPrint={{ masterInputs: value }} />
+                                <View style={{borderRadius:30,width:'80%'}}>
+                                    {value.uri===undefined?
+                                    <PrintComponentReteta DataToPrint={{ masterInputs: value }} />:
+                                    <PrintComponentaRetetaPhoto prop={{uri:value.uri}} />}
                                 </View>
                                 {DeleteMode === false ? <TouchableOpacity style={styles.PDFbtnstyle} onPress={() => { GeneratePDF(value) }}>
                                     <Image source={require('../icons/pdf_icon.png')} style={{height:30,width:30,alignSelf:'center'}}/>
@@ -90,7 +93,7 @@ const styles = StyleSheet.create({
         height:40,
         width:40,
         backgroundColor:formularButtonSubmit,
-        marginLeft:5,
+        marginLeft:15,
         borderRadius:15,
         marginTop:15,
         justifyContent:'center',
