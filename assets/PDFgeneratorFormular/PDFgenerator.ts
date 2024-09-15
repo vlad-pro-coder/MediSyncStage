@@ -4,12 +4,29 @@ import GenerateTextInputString from './Html_string_to_pdf/GenerateTextInputstrin
 import GenerateParagrafString from './Html_string_to_pdf/GenerateParagrafString';
 import GenerateBooleanString from './Html_string_to_pdf/GenerateBooleanString';
 import GenerateLinearInputsString from './Html_string_to_pdf/GenerateLinearInputsString';
-    ///text structure: {id:code,value:string}
-    ///paragraf structure: {id:code,masterText,value:[]}
-    ///boolean structure: {id:code,valuebool:boolean,valuetext:string}
+import GenerateImageString from './Html_string_to_pdf/GenerateImageString';
 
-const GeneratePDF = async ( {inputs,titlu}:any ) => {
-    let html:string = `<html><h1 style="font-size:50px;text-align:center;">${titlu}</h1><div style="padding:30px">`;
+const styles = `<style>
+            .no-break {
+              page-break-inside: avoid;
+              max-width: 100%;
+              height: auto;
+              display: block;
+              margin: auto;
+            }
+            @media print {
+              img {
+                max-height: 100vh;
+                max-width: 100vw;
+                object-fit: contain;
+              }
+            }
+          </style>`
+
+const GeneratePDF = async ( {formular,PhotosURIs}:any ) => {
+    const {inputs,titlu} = formular
+    let html:string = `<html><head>${styles}</head><body><h1 style="font-size:50px;text-align:center;">${titlu}</h1><div>`;
+    let ith = -1
     inputs.map((textobj:any) => {
         if (textobj.id[0] === "1") {
             html = html.concat(GenerateTextInputString(textobj))
@@ -23,8 +40,12 @@ const GeneratePDF = async ( {inputs,titlu}:any ) => {
         else if (textobj.id[0] === "4"){
             html = html.concat(GenerateLinearInputsString(textobj))
         }
+        else if(textobj.id[0] === "5"){
+            ith+=1
+            html = html.concat(GenerateImageString(PhotosURIs[ith]))
+        }
     })
-    html = html.concat("</div></html")
+    html = html.concat("</div></body></html")
     const { uri } = await Print.printToFileAsync({ html: html, base64: false });
     await Sharing.shareAsync(uri);
 }

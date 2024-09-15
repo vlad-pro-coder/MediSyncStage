@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { View, Text, StyleSheet, Image } from "react-native"
+import { View, Text, StyleSheet, Image, FlatList } from "react-native"
 
 interface IMGinfo {
     width: number,
@@ -15,8 +15,8 @@ const PrintComponentFormular = ({ DataToPrint }: any) => {
 
     useEffect(() => {
         const fetchSizes = async () => {
-        let aux: any = {}
-            const sizePromises = photosURIs.map((uri: string,index:number) => {
+            let aux: any = {}
+            const sizePromises = photosURIs.map((uri: string, index: number) => {
                 return new Promise<void>((resolve, reject) => {
                     Image.getSize(uri, (width, height) => {
                         aux[index] = { height, width };
@@ -42,15 +42,14 @@ const PrintComponentFormular = ({ DataToPrint }: any) => {
     const PrintImage = ({ prop }: any) => {
         const { index, pozPhoto } = prop
 
-        console.log(imageSizes)
-        const aspectRatio = imageSizes[pozPhoto]!==undefined ?imageSizes[pozPhoto].height / imageSizes[pozPhoto].width:0
+        const aspectRatio = imageSizes[pozPhoto] !== undefined ? imageSizes[pozPhoto].height / imageSizes[pozPhoto].width : 0
         return containerWidth > 0 && aspectRatio > 0 ? <Image id={index}
             source={{ uri: photosURIs[pozPhoto] }}
             style={{
                 width: containerWidth * 0.9, // 90% of the container width
                 height: (containerWidth * 0.9) * aspectRatio,
-                alignSelf:'center',
-                marginBottom:10
+                alignSelf: 'center',
+                marginBottom: 10
             }}
             resizeMode="contain"
         /> : <Text>loading...</Text>
@@ -78,27 +77,67 @@ const PrintComponentFormular = ({ DataToPrint }: any) => {
             }
         </View>
     }
+
     const PrintParagraf = ({ prop }: any) => {
+
+        const FlatListItemsParagraf = ({ item, index }: any) => {
+            const { value, id } = item;
+            if (id[0] === "1") {
+                return <PrintText prop={{ val: value, index: index }} />;
+            } else if (id[0] === "4") {
+                return <PrintLiniar prop={{ value: item.value, index: index }} />;
+            }
+            return null;
+        };
+
         const { masterText, value, index } = prop
         return <View id={`${index}`} style={{ paddingBottom: 5 }}>
             <Text style={{ paddingBottom: 5 }}>{masterText}:</Text>
             <View style={{ paddingStart: 30 }}>
-                {value.map((textobj: any, index: number) => {
+                <FlatList
+                    data={value}
+                    renderItem={FlatListItemsParagraf}
+                    keyExtractor={(item, index) => index.toString()}
+                    scrollEnabled = {false}
+                />
+                {/*value.map((textobj: any, index: number) => {
                     const { value, id } = textobj;
                     if (id[0] === "1")
                         return <PrintText prop={{ val: value, index: index }} />
                     else if (id[0] === "4")
                         return <PrintLiniar prop={{ value: textobj.value, index: index }} />
-                })}
+                })*/}
             </View>
         </View>
     }
 
 
+    const FlatItemsBasePrint = ({ item, index }: any) => {
+        const { id } = item;
+        if (id[0] === "1")
+            return <PrintText prop={{ val: item.value, index: index }} />
+        else if (id[0] === "2")
+            return <PrintParagraf prop={{ "masterText": item.masterText, "value": item.value, index: index }} />
+        else if (id[0] === "3")
+            return <PrintBoolean prop={{ "valuebool": item.valuebool, "valuetext": item.valuetext, index: index }} />
+        else if (id[0] === "4")
+            return <PrintLiniar prop={{ "value": item.value, index: index }} />
+        else if (id[0] === "5") {
+            nrPhotos += 1
+            return <PrintImage prop={{ index: index, pozPhoto: nrPhotos }} />
+        }
+        return null
+    }
 
     return <View style={{ width: '100%', paddingLeft: 5, paddingRight: 5 }} onLayout={handleLayout}>
-        <Text style={{ textAlign: 'center' ,marginBottom:10,fontSize:17}}>{titlu}</Text>
-        {inputs.map((obj: any, index: number) => {
+        <Text style={{ textAlign: 'center', marginBottom: 10, fontSize: 17 }}>{titlu}</Text>
+        <FlatList
+            data={inputs}
+            renderItem={FlatItemsBasePrint}
+            keyExtractor={(item, index) => index.toString()}
+            scrollEnabled = {false}
+        />
+        {/*inputs.map((obj: any, index: number) => {
             const { id } = obj
             if (id[0] === "1")
                 return <PrintText prop={{ val: obj.value, index: index }} />
@@ -112,7 +151,7 @@ const PrintComponentFormular = ({ DataToPrint }: any) => {
                 nrPhotos += 1
                 return <PrintImage prop={{ index: index, pozPhoto: nrPhotos }} />
             }
-        })}
+        })*/}
     </View>
 }
 

@@ -3,7 +3,6 @@ import * as Sharing from 'expo-sharing';
 
 const GeneratePDF = async ( {inputs,titlu}:any ) => {
     let html:string = `<html><div style="padding:20px">`;
-    console.log(inputs)
     //Unitate Sanitara
     html = html.concat('<div style="padding-left:20px;padding-top:20px">')
     html = html.concat('<h1>Unitate Sanitara:</h1>')
@@ -35,7 +34,7 @@ const GeneratePDF = async ( {inputs,titlu}:any ) => {
     //codul de parafa
     html = html.concat(`<h1>Codul de parafă: ${inputs[12].val}</h1>`)
 
-    html = html.concat("</div></html")
+    html = html.concat("</div></html>")
     const { uri } = await Print.printToFileAsync({ html: html, base64: false });
     await Sharing.shareAsync(uri);
 }

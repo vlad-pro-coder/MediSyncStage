@@ -71,7 +71,7 @@ const GetDataForUserIstoricMedical = ({prop}:any) => {
                                 <PrintComponentFormular DataToPrint={{ masterInputs: formular, photosURIs:PhotosURIs}} />
                             </View>
 
-                            {DeleteMode === false?<TouchableOpacity style={styles.PDFbtnstyle} onPress={() => { GeneratePDF(formular) }}>
+                            {DeleteMode === false?<TouchableOpacity style={styles.PDFbtnstyle} onPress={() => { GeneratePDF({formular,PhotosURIs}) }}>
                                 <Image source={require('../icons/pdf_icon.png')} style={{height:30,width:30,alignSelf:'center'}}/>
                             </TouchableOpacity>:<></>}
                         </View>

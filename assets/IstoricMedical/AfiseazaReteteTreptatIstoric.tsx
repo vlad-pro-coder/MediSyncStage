@@ -6,6 +6,7 @@ import DeleteGivenPath from "./DeleteGivenPath"
 import GeneratePDF from "../PDFgeneratorReteta/PDFgenerator"
 import { formularButtonSubmit } from "../color"
 import PrintComponentaRetetaPhoto from "../ComponenteTypeFormToPrint/PrintComponentaRetetaPhoto"
+import GeneratePhotoPDF from "../PDFgeneratorReteta/PDFgeneratorPhoto"
 
 
 const AfiseazaReteteTreptatIstoric = ({ DataToPrint }: any) => {
@@ -56,7 +57,7 @@ const AfiseazaReteteTreptatIstoric = ({ DataToPrint }: any) => {
                                     <PrintComponentReteta DataToPrint={{ masterInputs: value }} />:
                                     <PrintComponentaRetetaPhoto prop={{uri:value.uri}} />}
                                 </View>
-                                {DeleteMode === false ? <TouchableOpacity style={styles.PDFbtnstyle} onPress={() => { GeneratePDF(value) }}>
+                                {DeleteMode === false ? <TouchableOpacity style={styles.PDFbtnstyle} onPress={() => { value.uri===undefined?GeneratePDF(value):GeneratePhotoPDF(value.uri) }}>
                                     <Image source={require('../icons/pdf_icon.png')} style={{height:30,width:30,alignSelf:'center'}}/>
                                     </TouchableOpacity> : <></>}
                             </View>
