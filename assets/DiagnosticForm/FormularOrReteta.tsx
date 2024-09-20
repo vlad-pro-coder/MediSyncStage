@@ -1,5 +1,5 @@
 import Formular from "./FormularAnalize";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Prescriptie from "./Prescriptie";
 import { View, StyleSheet, TouchableOpacity, Text, Modal, Image } from 'react-native';
 import { formularBackground, formularButtonSubmit } from '../color'
@@ -10,6 +10,7 @@ import FromLinearToNested from "./TransformerFunctions/FromLinearToNested";
 import ModalSelectorWithLabels from "./ModalSelector/ModalSelectorWithLabels";
 import StoreImportedImages from "./StoreImportedImages";
 import ConvertTimeToString from "../ConvertTimeToString";
+import { getDatabase, onValue, ref } from "firebase/database";
 
 const GetCurrDate = () => {
     let currTime = new Date()
@@ -21,13 +22,51 @@ const GetCurrDate = () => {
     return date
 }
 
-const ChooseWhich = ({ email }: any) => {
+const ConvertCNPToAge = (CNP: string) => {
+    const anul = (CNP[0] === "1" || CNP[0] === "2"?19*100+(parseInt(CNP.substr(1,2))):20*100+(parseInt(CNP.substr(1,2))))
+    const luna  = parseInt(CNP.substr(3,2));
+    const zi = parseInt(CNP.substr(5,2));
+
+    const datacurr = GetCurrDate()
+
+    const anulcurr = parseInt(datacurr.substr(6,4));
+    const lunacurr = parseInt(datacurr.substr(3,2));
+    const zicurr = parseInt(datacurr.substr(0,2));
+
+    let varsta = anulcurr-anul;
+    let varstaluni = lunacurr-luna
+    if(lunacurr<luna)
+        {varsta-=1;
+        varstaluni = lunacurr
+        }
+    else if(lunacurr==luna&&zicurr<zi)
+        varsta-=1;
+
+    return {varsta:varsta,luni:varstaluni}
+}
+
+const ConvertCNPToGender = (CNP: string) => {
+    if(CNP[0] == "1" || CNP[0] == "3" || CNP[0] == "5" || CNP[0] == "7")
+        return "Barbat"
+    return "Femeie"
+}
+
+declare global {
+    var Listener: () => void;
+}
+
+const ChooseWhich = ({ route }: { route: any }) => {
+
+    let email = route.params.email
+    let userID = route.params.userID
 
     email = 'cineva@gmail.com'
+    userID = "qPnCUJFD5qUBBGG6aGucpu5wxb32"
+
     const nav = useNavigation<NativeStackNavigationProp<any>>();
 
     const [PrescriptionOrForm, changePrescriptionOrForm] = useState<boolean>(false)
-    const [ListaImageUris,changeListaImageUris] = useState<string[]>([])
+    const [ListaImageUris, changeListaImageUris] = useState<string[]>([])
     const [titlu, changeTitlu] = useState('')
     const [inputsFormular, setInputsFormular] = useState<object[]>([]);
     const [inputsReteta, setInputsReteta] = useState<object[]>([
@@ -38,6 +77,22 @@ const ChooseWhich = ({ email }: any) => {
     ]);
     const [isModalActive, ChangeModalState] = useState<boolean>(false)
     const [pathRetetaStorage, changePath] = useState<string>('')
+    const [CNP, changeCNP] = useState<number>(0)
+
+
+    useEffect(() => {
+        const fetchCNP = async () => {
+            const dbRef = getDatabase();
+            Listener = onValue(ref(dbRef, `users/${userID}/`), (snapshot) => {
+                changeCNP(snapshot.val())
+            }, { onlyOnce: true })
+        }
+        fetchCNP()
+
+        return () => {
+            globalThis.Listener()
+        }
+    }, [])
 
     return <View style={styles.container}>
         <View style={styles.twoOptionsContainer}>
@@ -50,16 +105,18 @@ const ChooseWhich = ({ email }: any) => {
                 <Text style={styles.textalignment}>Prescriptie</Text>
             </TouchableOpacity>
         </View>
-        
-        <View style={{height:'82%'}}>
+
+        <View style={{ height: '82%' }}>
             {PrescriptionOrForm === false ?
                 <Formular prop={{
                     InputsLined: inputsFormular
                     , changeInputslined: setInputsFormular
                     , titlu: titlu
                     , changeTitlu: changeTitlu
-                    , ListaImageUris:ListaImageUris
-                    , changeListaImageUris:changeListaImageUris
+                    , ListaImageUris: ListaImageUris
+                    , changeListaImageUris: changeListaImageUris
+                    , varsta:ConvertCNPToAge(CNP.toString())
+                    , Gen:ConvertCNPToGender(CNP.toString())
                 }} />
                 : <Prescriptie prop={{
                     inputs: inputsReteta
@@ -68,13 +125,13 @@ const ChooseWhich = ({ email }: any) => {
                     , changeTitlu: changeTitlu
                 }} />}
         </View>
-        
+
         <View style={{ height: '8%', backgroundColor: formularBackground }}>
             <TouchableOpacity style={styles.submit} onPress={() => {
                 if (PrescriptionOrForm === false) {
                     const codForm = ConvertTimeToString()
-                    SubmitAnyForm({ inputs: FromLinearToNested(inputsFormular), titlu: titlu, PrescriptionOrForm: PrescriptionOrForm, email: email,cod:codForm })
-                    StoreImportedImages({ListaURIs:ListaImageUris,email,cod:codForm})
+                    SubmitAnyForm({ inputs: FromLinearToNested(inputsFormular), titlu: titlu, PrescriptionOrForm: PrescriptionOrForm, email: email, cod: codForm })
+                    StoreImportedImages({ ListaURIs: ListaImageUris, email, cod: codForm })
                     nav.pop()
                 }
                 else
@@ -94,18 +151,18 @@ const ChooseWhich = ({ email }: any) => {
                     </TouchableOpacity>
                 </View>
                 <Text style={{ alignSelf: 'center', fontSize: 16, marginBottom: 5 }}>Selecta-ti carui formular sa i se ataseze reteta</Text>
-                <View style={{height:'81%'}}>
-                    <ModalSelectorWithLabels prop={{ email: email, changePath: changePath ,pathRetetaStorage:pathRetetaStorage}} />
+                <View style={{ height: '81%' }}>
+                    <ModalSelectorWithLabels prop={{ email: email, changePath: changePath, pathRetetaStorage: pathRetetaStorage }} />
                 </View>
-                    <TouchableOpacity
-                        style={styles.modalBTN}
-                        onPress={() => {
-                            SubmitAnyForm({ inputs: inputsReteta, titlu: 'PRESCRIPȚIE MEDICALĂ', PrescriptionOrForm: PrescriptionOrForm, email: email, RetetaPathSpecific: pathRetetaStorage })
-                            nav.pop()
-                        }}
-                    >
-                        <Text style={{textAlign:'center',fontSize:17}}>Adaugati subscriptia</Text>
-                    </TouchableOpacity>
+                <TouchableOpacity
+                    style={styles.modalBTN}
+                    onPress={() => {
+                        SubmitAnyForm({ inputs: inputsReteta, titlu: 'PRESCRIPȚIE MEDICALĂ', PrescriptionOrForm: PrescriptionOrForm, email: email, RetetaPathSpecific: pathRetetaStorage })
+                        nav.pop()
+                    }}
+                >
+                    <Text style={{ textAlign: 'center', fontSize: 17 }}>Adaugati subscriptia</Text>
+                </TouchableOpacity>
             </View>
         </Modal>
     </View>
@@ -114,10 +171,10 @@ const ChooseWhich = ({ email }: any) => {
 const styles = StyleSheet.create({
     container: {
         height: '100%',
-        backgroundColor:'white',
+        backgroundColor: 'white',
     },
     twoOptionsContainer: {
-        marginTop:30,
+        marginTop: 30,
         paddingLeft: 10,
         paddingRight: 10,
         flexDirection: 'row',
@@ -126,16 +183,16 @@ const styles = StyleSheet.create({
     },
     FormularBTN: {
         width: '50%',
-        height:50,
+        height: 50,
         direction: 'ltr',
     },
     RetetaBTN: {
         width: '50%',
-        height:50,
+        height: 50,
         direction: 'rtl',
     },
     textalignment: {
-        marginTop:10,
+        marginTop: 10,
         fontSize: 20,
         textAlign: 'center',
         alignSelf: 'center',
@@ -157,7 +214,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
     },
     spacebetweentop: {
-       height:30
+        height: 30
     },
     leaveModalBTN: {
         marginEnd: 10,
@@ -173,12 +230,12 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
     },
     modalBTN: {
-        marginTop:10,
+        marginTop: 10,
         borderRadius: 10,
         height: 50,
         width: 100,
         backgroundColor: formularButtonSubmit,
-        alignSelf:'center',
+        alignSelf: 'center',
     }
 })
 

@@ -1,5 +1,5 @@
 
-const TemplateHematologie = (assignedID:string,InputsLined:any, changeInputslined:any) =>{
+const TemplateHematologie = (assignedID:string,InputsLined:any, changeInputslined:any,varsta:number,luni:number) =>{
     const NewTemplateHematologie = [{
         "id": `${assignedID}`,
         "value": "HEMATOLOGIE",

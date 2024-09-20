@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
-import { View, Text, StyleSheet, Image, FlatList } from "react-native"
+import { View, Text, StyleSheet, Image, FlatList, Pressable, Modal } from "react-native"
+import ZoomableModal from "../zoomableImageInModal/zoomableModal"
 
 interface IMGinfo {
     width: number,
@@ -12,6 +13,9 @@ const PrintComponentFormular = ({ DataToPrint }: any) => {
 
     const [containerWidth, setContainerWidth] = useState(0);
     const [imageSizes, setImageSizes] = useState<IMGinfo[]>([]);
+
+    const [showModalZoomable, changeShow] = useState<boolean>(false)
+    const [SelectedURI, changeURI] = useState<string>('')
 
     useEffect(() => {
         const fetchSizes = async () => {
@@ -43,7 +47,10 @@ const PrintComponentFormular = ({ DataToPrint }: any) => {
         const { index, pozPhoto } = prop
 
         const aspectRatio = imageSizes[pozPhoto] !== undefined ? imageSizes[pozPhoto].height / imageSizes[pozPhoto].width : 0
-        return containerWidth > 0 && aspectRatio > 0 ? <Image id={index}
+        return containerWidth > 0 && aspectRatio > 0 ? <Pressable onPress={() => {
+            changeURI(photosURIs[pozPhoto])
+            changeShow(true)
+        }}><Image id={index}
             source={{ uri: photosURIs[pozPhoto] }}
             style={{
                 width: containerWidth * 0.9, // 90% of the container width
@@ -52,7 +59,7 @@ const PrintComponentFormular = ({ DataToPrint }: any) => {
                 marginBottom: 10
             }}
             resizeMode="contain"
-        /> : <Text>loading...</Text>
+            /></Pressable> : <Text>loading...</Text>
     }
 
     const PrintText = ({ prop }: any) => {
@@ -98,7 +105,7 @@ const PrintComponentFormular = ({ DataToPrint }: any) => {
                     data={value}
                     renderItem={FlatListItemsParagraf}
                     keyExtractor={(item, index) => index.toString()}
-                    scrollEnabled = {false}
+                    scrollEnabled={false}
                 />
                 {/*value.map((textobj: any, index: number) => {
                     const { value, id } = textobj;
@@ -130,12 +137,15 @@ const PrintComponentFormular = ({ DataToPrint }: any) => {
     }
 
     return <View style={{ width: '100%', paddingLeft: 5, paddingRight: 5 }} onLayout={handleLayout}>
+        <Modal onRequestClose={() => { changeShow(false) }} visible={showModalZoomable}>
+            <ZoomableModal prop={{ uri: SelectedURI }} />
+        </Modal>
         <Text style={{ textAlign: 'center', marginBottom: 10, fontSize: 17 }}>{titlu}</Text>
         <FlatList
             data={inputs}
             renderItem={FlatItemsBasePrint}
             keyExtractor={(item, index) => index.toString()}
-            scrollEnabled = {false}
+            scrollEnabled={false}
         />
         {/*inputs.map((obj: any, index: number) => {
             const { id } = obj

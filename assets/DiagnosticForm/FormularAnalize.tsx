@@ -18,7 +18,7 @@ const Formular = ({ prop }: any) => {
     const [ImgCounter,changeImgcounter] = useState(0)
     const [activeBtn, changeBtn] = useState<boolean>(true)
 
-    const { InputsLined, changeInputslined, titlu, changeTitlu, ListaImageUris, changeListaImageUris } = prop
+    const { InputsLined, changeInputslined, titlu, changeTitlu, ListaImageUris, changeListaImageUris, agemonth } = prop
     //inputs strcuture[]:
         ///text structure: {id:code,value:string}
         ///paragraf structure: {id:code,masterText:string,value:[]}
@@ -203,28 +203,28 @@ const Formular = ({ prop }: any) => {
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => {
                         changeCounter(counter + 1)
-                        TemplateHematologie("2" + counter,InputsLined, changeInputslined)
+                        TemplateHematologie("2" + counter,InputsLined, changeInputslined,agemonth.varsta,agemonth.luni)
                     }}
                         style={styles.actionBtnstyle}>
                         <Text style={styles.textCenter}>Schita Hematologie</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => {
                         changeCounter(counter + 1)
-                        TemplateBiochimie("2" + counter,InputsLined, changeInputslined)
+                        TemplateBiochimie("2" + counter,InputsLined, changeInputslined,agemonth.varsta,agemonth.luni)
                     }}
                         style={styles.actionBtnstyle}>
                         <Text style={styles.textCenter}>Schita BioChimie</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => {
                         changeCounter(counter + 1)
-                        TemplateExamenUrina("2" + counter,InputsLined, changeInputslined)
+                        TemplateExamenUrina("2" + counter,InputsLined, changeInputslined,agemonth.varsta,agemonth.luni)
                     }}
                         style={styles.actionBtnstyle}>
                         <Text style={styles.textCenter}>Schita Examen Urina</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => {
                         changeCounter(counter + 1)
-                        TemplateImunologie("2" + counter,InputsLined, changeInputslined)
+                        TemplateImunologie("2" + counter,InputsLined, changeInputslined,agemonth.varsta,agemonth.luni)
                     }}
                         style={styles.actionBtnstyle}>
                         <Text style={styles.textCenter}>Schita Imunologie</Text>

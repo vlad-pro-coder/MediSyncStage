@@ -1,7 +1,5 @@
-import PutjsonOnStorageForDebug from "../../PutjsonOnStorageForDebug"
-import FromNestedToLinear from "../TransformerFunctions/FromNestedToLinear"
 
-const TemplateImunologie = (assignedID:string,InputsLined:any, changeInputslined:any) =>{
+const TemplateImunologie = (assignedID:string,InputsLined:any, changeInputslined:any,varsta:number,luni:number) =>{
     const NewTemplateImunologie = [
         {
             "id": `${assignedID}`,

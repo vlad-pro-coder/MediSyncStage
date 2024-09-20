@@ -1,7 +1,5 @@
-import PutjsonOnStorageForDebug from "../../PutjsonOnStorageForDebug"
-import FromNestedToLinear from "../TransformerFunctions/FromNestedToLinear"
 
-const TemplateExamenUrina = (assignedID:string,InputsLined:any, changeInputslined:any) =>{
+const TemplateExamenUrina = (assignedID:string,InputsLined:any, changeInputslined:any,varsta:number,luni:number) =>{
     const NewTemplateExamenUrina = [
         {
             "id": `${assignedID}`,
