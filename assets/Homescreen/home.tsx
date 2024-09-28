@@ -83,7 +83,7 @@ function HomeScreen({ route, navigation }: Props) {
     }
 
       {
-        userState == "Doctor" && <TouchableOpacity onPress={() => nav.push("FormularOrReteta")} style={[styles.button, styles.googleButton]}>
+        userState == "Doctor" && <TouchableOpacity onPress={() => nav.push("PacientSelectorFormular")} style={[styles.button, styles.googleButton]}>
           <Text style={styles.buttonText}>Exemplu formular</Text>
         </TouchableOpacity>
       }

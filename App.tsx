@@ -21,6 +21,7 @@ import ChatBotScreen from './assets/ChatBot/chatBotScreen';
 import FrameForQRcodeScanner from './assets/QRcodeGenANDscan/FrameForQRcodeScanning';
 import PrintIstoricWithLabels from './assets/IstoricMedical/PrintIstoricWithLabels';
 import DisplayPhotosToChoose from './assets/testcameraroll/DisplayPhotosToChoose';
+import PacientSelector from './assets/DiagnosticForm/PacientSelectorScreen/PacientSelector';
 
 // TODO: Replace the following with your app's Firebase project configuration
 const firebaseConfig = {
@@ -34,10 +35,11 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 type RootStackParamList = {
+  PacientSelectorFormular:undefined,
   IstoricMedicalQRcode: { email: string, userID: string },
   IstoricMedical: { email: string,userID: string },
   AssignPatientScreen:undefined;
-  FormularOrReteta:undefined;
+  FormularOrReteta:{ email: string, userID: string };
   StartPage: undefined;
   PacientRegister: undefined;
   DoctorRegister: undefined;
@@ -66,7 +68,8 @@ function App() {
         <RootStack.Screen name="Home" component={HomeScreen} initialParams={{ userID: null }} />
         <RootStack.Screen name="IstoricMedical" component={PrintIstoricWithLabels} initialParams={{  email: '', userID: ''  }}/>
         <RootStack.Screen name="IstoricMedicalQRcode" component={FrameForQRcodeGeneration} initialParams={{  email: '', userID: '' }}/>
-        <RootStack.Screen name="FormularOrReteta" component={FormularOrReteta} />
+        <RootStack.Screen name="PacientSelectorFormular" component={PacientSelector} />
+        <RootStack.Screen name="FormularOrReteta" component={FormularOrReteta} initialParams={{  email: '', userID: '' }}/>
         <RootStack.Screen name="AssignPatientScreen" component={AssignPatientScreen} />
         <RootStack.Screen name="ForgotPassword" component={ForgotPassword} />
         <RootStack.Screen name="SelectDoctor" component={SelectDoctorScreen} />

@@ -18,7 +18,7 @@ const Formular = ({ prop }: any) => {
     const [ImgCounter,changeImgcounter] = useState(0)
     const [activeBtn, changeBtn] = useState<boolean>(true)
 
-    const { InputsLined, changeInputslined, titlu, changeTitlu, ListaImageUris, changeListaImageUris, agemonth } = prop
+    const { InputsLined, changeInputslined, titlu, changeTitlu, ListaImageUris, changeListaImageUris, agemonth, Gen } = prop
     //inputs strcuture[]:
         ///text structure: {id:code,value:string}
         ///paragraf structure: {id:code,masterText:string,value:[]}

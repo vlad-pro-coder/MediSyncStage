@@ -23,30 +23,30 @@ const GetCurrDate = () => {
 }
 
 const ConvertCNPToAge = (CNP: string) => {
-    const anul = (CNP[0] === "1" || CNP[0] === "2"?19*100+(parseInt(CNP.substr(1,2))):20*100+(parseInt(CNP.substr(1,2))))
-    const luna  = parseInt(CNP.substr(3,2));
-    const zi = parseInt(CNP.substr(5,2));
+    const anul = (CNP[0] === "1" || CNP[0] === "2" ? 19 * 100 + (parseInt(CNP.substr(1, 2))) : 20 * 100 + (parseInt(CNP.substr(1, 2))))
+    const luna = parseInt(CNP.substr(3, 2));
+    const zi = parseInt(CNP.substr(5, 2));
 
     const datacurr = GetCurrDate()
 
-    const anulcurr = parseInt(datacurr.substr(6,4));
-    const lunacurr = parseInt(datacurr.substr(3,2));
-    const zicurr = parseInt(datacurr.substr(0,2));
+    const anulcurr = parseInt(datacurr.substr(6, 4));
+    const lunacurr = parseInt(datacurr.substr(3, 2));
+    const zicurr = parseInt(datacurr.substr(0, 2));
 
-    let varsta = anulcurr-anul;
-    let varstaluni = lunacurr-luna
-    if(lunacurr<luna)
-        {varsta-=1;
-        varstaluni = lunacurr
-        }
-    else if(lunacurr==luna&&zicurr<zi)
-        varsta-=1;
+    let varsta = anulcurr - anul;
+    let luni = lunacurr - luna
+    if (lunacurr < luna) {
+        varsta -= 1;
+        luni = lunacurr
+    }
+    else if (lunacurr == luna && zicurr < zi)
+        varsta -= 1;
 
-    return {varsta:varsta,luni:varstaluni}
+    return { varsta, luni }
 }
 
 const ConvertCNPToGender = (CNP: string) => {
-    if(CNP[0] == "1" || CNP[0] == "3" || CNP[0] == "5" || CNP[0] == "7")
+    if (CNP[0] == "1" || CNP[0] == "3" || CNP[0] == "5" || CNP[0] == "7")
         return "Barbat"
     return "Femeie"
 }
@@ -60,8 +60,7 @@ const ChooseWhich = ({ route }: { route: any }) => {
     let email = route.params.email
     let userID = route.params.userID
 
-    email = 'cineva@gmail.com'
-    userID = "qPnCUJFD5qUBBGG6aGucpu5wxb32"
+    console.log(email,userID)
 
     const nav = useNavigation<NativeStackNavigationProp<any>>();
 
@@ -79,11 +78,12 @@ const ChooseWhich = ({ route }: { route: any }) => {
     const [pathRetetaStorage, changePath] = useState<string>('')
     const [CNP, changeCNP] = useState<number>(0)
 
+    console.log(CNP)
 
     useEffect(() => {
         const fetchCNP = async () => {
             const dbRef = getDatabase();
-            Listener = onValue(ref(dbRef, `users/${userID}/`), (snapshot) => {
+            Listener = onValue(ref(dbRef, `users/${userID}/CNP`), (snapshot) => {
                 changeCNP(snapshot.val())
             }, { onlyOnce: true })
         }
@@ -115,8 +115,8 @@ const ChooseWhich = ({ route }: { route: any }) => {
                     , changeTitlu: changeTitlu
                     , ListaImageUris: ListaImageUris
                     , changeListaImageUris: changeListaImageUris
-                    , varsta:ConvertCNPToAge(CNP.toString())
-                    , Gen:ConvertCNPToGender(CNP.toString())
+                    , agemonth: ConvertCNPToAge(CNP.toString())
+                    , Gen: ConvertCNPToGender(CNP.toString())
                 }} />
                 : <Prescriptie prop={{
                     inputs: inputsReteta
