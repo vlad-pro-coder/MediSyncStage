@@ -1,5 +1,6 @@
+import { densitate_urina, ph_urina } from "../../assignDataBasedOnAge"
 
-const TemplateExamenUrina = (assignedID:string,InputsLined:any, changeInputslined:any,varsta:number,luni:number) =>{
+const TemplateExamenUrina = (assignedID:string,InputsLined:any, changeInputslined:any,varsta:number,luni:number,gen:string) =>{
     const NewTemplateExamenUrina = [
         {
             "id": `${assignedID}`,
@@ -23,7 +24,7 @@ const TemplateExamenUrina = (assignedID:string,InputsLined:any, changeInputsline
                 "pH urinar",
                 "",
                 "",
-                ""
+                `${ph_urina()}`
             ],
             "IsUltimul": false
         },
@@ -33,7 +34,7 @@ const TemplateExamenUrina = (assignedID:string,InputsLined:any, changeInputsline
                 "Densitate urinara",
                 "",
                 "",
-                ""
+                `${densitate_urina()}`
             ],
             "IsUltimul": false
         },
@@ -43,7 +44,7 @@ const TemplateExamenUrina = (assignedID:string,InputsLined:any, changeInputsline
                 "Leucocit esteraza",
                 "",
                 "",
-                ""
+                "Absent"
             ],
             "IsUltimul": false
         },
@@ -53,7 +54,7 @@ const TemplateExamenUrina = (assignedID:string,InputsLined:any, changeInputsline
                 "Hemoglobina",
                 "",
                 "",
-                ""
+                "Normal"
             ],
             "IsUltimul": false
         },
@@ -63,7 +64,7 @@ const TemplateExamenUrina = (assignedID:string,InputsLined:any, changeInputsline
                 "Bilirubina-",
                 "",
                 "",
-                ""
+                "Negativ"
             ],
             "IsUltimul": false
         },
@@ -72,8 +73,8 @@ const TemplateExamenUrina = (assignedID:string,InputsLined:any, changeInputsline
             "value": [
                 "Urobilinogen-",
                 "",
-                "mg/dL",
-                ""
+                "",
+                "Normal"
             ],
             "IsUltimul": false
         },
@@ -82,8 +83,8 @@ const TemplateExamenUrina = (assignedID:string,InputsLined:any, changeInputsline
             "value": [
                 "Glucoza-",
                 "",
-                "mg/dL,2 mg/dL",
-                ""
+                "",
+                "Normal"
             ],
             "IsUltimul": false
         },
@@ -93,7 +94,7 @@ const TemplateExamenUrina = (assignedID:string,InputsLined:any, changeInputsline
                 "Proteine",
                 "",
                 "",
-                ""
+                "Absent"
             ],
             "IsUltimul": false
         },
@@ -103,7 +104,7 @@ const TemplateExamenUrina = (assignedID:string,InputsLined:any, changeInputsline
                 "Corpi cetonici",
                 "",
                 "",
-                ""
+                "Negativ"
             ],
             "IsUltimul": false
         },
@@ -113,7 +114,7 @@ const TemplateExamenUrina = (assignedID:string,InputsLined:any, changeInputsline
                 "Nitriti-",
                 "",
                 "",
-                ""
+                "Negativ"
             ],
             "IsUltimul": false
         },
@@ -123,7 +124,7 @@ const TemplateExamenUrina = (assignedID:string,InputsLined:any, changeInputsline
                 "Acid ascorbic",
                 "",
                 "",
-                ""
+                "Absent"
             ],
             "IsUltimul": false
         },
@@ -133,7 +134,7 @@ const TemplateExamenUrina = (assignedID:string,InputsLined:any, changeInputsline
                 "Culoare",
                 "",
                 "",
-                ""
+                "~Galben"
             ],
             "IsUltimul": false
         },
@@ -143,7 +144,7 @@ const TemplateExamenUrina = (assignedID:string,InputsLined:any, changeInputsline
                 "Claritate",
                 "",
                 "",
-                ""
+                "Clar"
             ],
             "IsUltimul": false
         },
@@ -152,8 +153,8 @@ const TemplateExamenUrina = (assignedID:string,InputsLined:any, changeInputsline
             "value": [
                 "Celule epiteliale plate-",
                 "",
-                "UM",
-                "/HPF"
+                "/HPF",
+                "F rare"
             ],
             "IsUltimul": false
         },
@@ -162,8 +163,8 @@ const TemplateExamenUrina = (assignedID:string,InputsLined:any, changeInputsline
             "value": [
                 "Leucocite-",
                 "",
-                "UM",
-                "/HPF"
+                "/HPF",
+                "F rare"
             ],
             "IsUltimul": true
         }

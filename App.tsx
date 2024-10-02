@@ -1,27 +1,35 @@
 import 'react-native-gesture-handler';
-import React from 'react-native';
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, Text, View } from 'react-native';
+import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import AuthScreen from './assets/Auth Group/AuthPage';
 import HomeScreen from './assets/Homescreen/home';
-import FormularOrReteta from './assets/DiagnosticForm/FormularOrReteta'
+import ConsultScreen from './assets/Consult/ConsultScreen';
+import { getAuth } from "firebase/auth";
 import ForgotPassword from './assets/Auth Group/ForgotPassword';
-import AssignPatientScreen from './assets/assignPatientToDoctor/AssignPatientScreen'
 
 
 import { initializeApp } from 'firebase/app';
 import SelectDoctorScreen from './assets/Appointments/SelectDoctor';
+import { firebase } from '@react-native-firebase/database';
 import StartPage from './assets/Auth Group/StartPage';
 import PacientRegister from './assets/Auth Group/Pacient/PacientAuth';
 import DoctorRegister from './assets/Auth Group/Doctor/DoctorAuth';
 import OrganisationRegister from './assets/Auth Group/Organizatie/OrganizationAuth';
 import ScheduleAppointmentScreen from './assets/Appointments/ScheduleAppointment';
-import CalendarScreen from './assets/Appointments/appointmentsCalendar';
-import FrameForQRcodeGeneration from './assets/QRcodeGenANDscan/FrameForQRcodeGeneration';
-import ChatBotScreen from './assets/ChatBot/chatBotScreen';
-import FrameForQRcodeScanner from './assets/QRcodeGenANDscan/FrameForQRcodeScanning';
+import CalendarScreen from './assets/appointmentsCalendar';
+import Index from './assets/Homescreen';
+import EditProfileScreen from './assets/Auth Group/Doctor/DoctorProfile';
 import PrintIstoricWithLabels from './assets/IstoricMedical/PrintIstoricWithLabels';
+import FrameForQRcodeGeneration from './assets/QRcodeGenANDscan/FrameForQRcodeGeneration';
+import FormularOrReteta from './assets/DiagnosticForm/FormularOrReteta';
 import DisplayPhotosToChoose from './assets/testcameraroll/DisplayPhotosToChoose';
+import FrameForQRcodeScanner from './assets/QRcodeGenANDscan/FrameForQRcodeScanning';
+import AssignPatientScreen from './assets/assignPatientToDoctor/AssignPatientScreen';
 import PacientSelector from './assets/DiagnosticForm/PacientSelectorScreen/PacientSelector';
+import ShowPatientListScreen from './assets/ShowPatientList/ShowPatientListScreen';
 
 // TODO: Replace the following with your app's Firebase project configuration
 const firebaseConfig = {
@@ -35,11 +43,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 type RootStackParamList = {
-  PacientSelectorFormular:undefined,
-  IstoricMedicalQRcode: { email: string, userID: string },
-  IstoricMedical: { email: string,userID: string },
-  AssignPatientScreen:undefined;
-  FormularOrReteta:{ email: string, userID: string };
+  PacientSelectorScreen:undefined,
   StartPage: undefined;
   PacientRegister: undefined;
   DoctorRegister: undefined;
@@ -47,12 +51,18 @@ type RootStackParamList = {
   Home: { userID: any };
   Consult: { user: any };
   ForgotPassword: undefined;
-  SelectDoctor: {userID: string};
-  ScheduleAppointment: { doctorID: any, userID: any };
+  SelectDoctor: undefined;
+  ScheduleAppointment: { doctorID: any };
   CalendarScreen: undefined;
+  Index: { userID: any, email:string };
+  EditProfile: {userID: any};
+  DisplayPhotosToChoose:{email:''},
+  IstoricMedicalQRcode: { email: string, userID: string },
+  IstoricMedical: { email: string,userID: string },
+  AssignPatientScreen:undefined;
+  FormularOrReteta:{ email: string, userID: string };
   ChatBotScreen: undefined;
   IstoricMedicalQRscanner: undefined;
-  DisplayPhotosToChoose:{email:''},
 };
 
 const RootStack = createStackNavigator<RootStackParamList>();
@@ -61,23 +71,24 @@ function App() {
   return (
     <NavigationContainer>
       <RootStack.Navigator screenOptions={{ headerShown: false }}>
-        <RootStack.Screen name='StartPage' component={StartPage} />
+      <RootStack.Screen name='StartPage' component={StartPage} />
         <RootStack.Screen name="PacientRegister" component={PacientRegister} />
         <RootStack.Screen name="DoctorRegister" component={DoctorRegister} />
         <RootStack.Screen name="OrganisationRegister" component={OrganisationRegister} />
+        <RootStack.Screen name="Index" component={Index} initialParams={{ userID: null,email:'' }} />
         <RootStack.Screen name="Home" component={HomeScreen} initialParams={{ userID: null }} />
         <RootStack.Screen name="IstoricMedical" component={PrintIstoricWithLabels} initialParams={{  email: '', userID: ''  }}/>
         <RootStack.Screen name="IstoricMedicalQRcode" component={FrameForQRcodeGeneration} initialParams={{  email: '', userID: '' }}/>
-        <RootStack.Screen name="PacientSelectorFormular" component={PacientSelector} />
+        <RootStack.Screen name="PacientSelectorScreen" component={PacientSelector} />
         <RootStack.Screen name="FormularOrReteta" component={FormularOrReteta} initialParams={{  email: '', userID: '' }}/>
         <RootStack.Screen name="AssignPatientScreen" component={AssignPatientScreen} />
         <RootStack.Screen name="ForgotPassword" component={ForgotPassword} />
         <RootStack.Screen name="SelectDoctor" component={SelectDoctorScreen} />
         <RootStack.Screen name="ScheduleAppointment" component={ScheduleAppointmentScreen} />
         <RootStack.Screen name="CalendarScreen" component={CalendarScreen} />
-        <RootStack.Screen name="ChatBotScreen" component={ChatBotScreen} />
         <RootStack.Screen name="IstoricMedicalQRscanner" component={FrameForQRcodeScanner}/>
         <RootStack.Screen name="DisplayPhotosToChoose" component={DisplayPhotosToChoose} initialParams={{ email: ''}}/>
+        <RootStack.Screen name="ShowPatientList" component={ShowPatientListScreen} />
       </RootStack.Navigator>
     </NavigationContainer>
   );

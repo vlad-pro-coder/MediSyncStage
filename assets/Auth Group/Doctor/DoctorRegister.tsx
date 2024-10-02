@@ -15,8 +15,10 @@ const DoctorRegister = () => {
     const [surName, setSurName] = useState("Popescu");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [isDoctor, setIsDoctor] = useState(true);
+    const [accountType, setAccountType] = useState("doctor");
     const [doctorNumber, setDoctorNumber] = useState('');
+    const [pacientIds, setPacientIds] = useState('');
+
 
     const nav = useNavigation<NativeStackNavigationProp<any>>();
 
@@ -24,7 +26,7 @@ const DoctorRegister = () => {
         // to do later, will add stuff to firestore realtime database
         // now i just made a user autentithication system
         // to see how to do this visit https://www.youtube.com/watch?v=mZlKwRV4MC8
-        db().ref(`/users/${response.user.uid}`).set({ CNP, nrTelefon, name, surName, email, isDoctor, "appointments": [{}], "uid": response.user.uid });
+        db().ref(`/users/${response.user.uid}`).set({ CNP, nrTelefon, name, surName, email, accountType, "appointments": [{}], "uid": response.user.uid, pacientIds });
     }
 
     const registerAndGoToMainFlow = async (response: any) => {
@@ -38,7 +40,7 @@ const DoctorRegister = () => {
                 if (response.user) {
                     console.log(response.user.uid)
                     await createProfile(response);
-                    nav.replace("Home", { userID: response.user.uid} )
+                    nav.replace("Index", {userID: response.user.uid})
                 }
 
             } catch (e: any) {

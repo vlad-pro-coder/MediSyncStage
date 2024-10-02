@@ -1,5 +1,6 @@
+import { concentratia_medie_a_hemoglobinei, distributia_plachetelor, fibrogen, hematocrit, hemoglobina, hemoglobina_eritrocitara_medie, largimea_distributiei, numar_de_bazofile, numar_de_eozinofile, numar_de_eritrocite, numar_de_leucocite, numar_de_limfocite, numar_de_monocite, numar_de_neutrofile, numar_de_trombocite, numarul_de_reticulocite, procent_reticulocite, procentul_de_bazofile, procentul_de_eozinofile, procentul_de_limfocite, procentul_de_monocite, procentul_de_neutrofile, viteza_de_sedimentare, volumul_mediu_eritrocitar, volumul_mediu_plachetar } from "../../assignDataBasedOnAge"
 
-const TemplateHematologie = (assignedID:string,InputsLined:any, changeInputslined:any,varsta:number,luni:number) =>{
+const TemplateHematologie = (assignedID:string,InputsLined:any, changeInputslined:any,varsta:number,luni:number,gen:string) =>{
     const NewTemplateHematologie = [{
         "id": `${assignedID}`,
         "value": "HEMATOLOGIE",
@@ -22,7 +23,7 @@ const TemplateHematologie = (assignedID:string,InputsLined:any, changeInputsline
             "Numar de eritrocite",
             "",
             "mil./μL",
-            ""
+            `${numar_de_eritrocite(varsta,gen,luni)}`
         ],
         "IsUltimul": false
     },
@@ -32,7 +33,7 @@ const TemplateHematologie = (assignedID:string,InputsLined:any, changeInputsline
             "Hemoglobina",
             "",
             "g/dL",
-            ""
+            `${hemoglobina(varsta,gen,luni)}`
         ],
         "IsUltimul": false
     },
@@ -42,7 +43,7 @@ const TemplateHematologie = (assignedID:string,InputsLined:any, changeInputsline
             "Hematocrit",
             "",
             "%",
-            ""
+            `${hematocrit(varsta,gen,luni)}`
         ],
         "IsUltimul": false
     },
@@ -52,7 +53,7 @@ const TemplateHematologie = (assignedID:string,InputsLined:any, changeInputsline
             "Volumul mediu eritrocitar",
             "",
             "fL",
-            ""
+            `${volumul_mediu_eritrocitar(varsta,gen,luni)}`
         ],
         "IsUltimul": false
     },
@@ -62,7 +63,7 @@ const TemplateHematologie = (assignedID:string,InputsLined:any, changeInputsline
             "Hemoglobina eritrocitara medie",
             "",
             "pg",
-            ""
+            `${hemoglobina_eritrocitara_medie(varsta,gen,luni)}`
         ],
         "IsUltimul": false
     },
@@ -72,7 +73,7 @@ const TemplateHematologie = (assignedID:string,InputsLined:any, changeInputsline
             "Concentratia medie a hemoglobinei eritrocitare",
             "",
             "g/dL",
-            ""
+            `${concentratia_medie_a_hemoglobinei(varsta,gen,luni)}`
         ],
         "IsUltimul": false
     },
@@ -82,7 +83,7 @@ const TemplateHematologie = (assignedID:string,InputsLined:any, changeInputsline
             "Largimea distributiei eritrocitare - coeficient variatie",
             "",
             "%",
-            ""
+            `${largimea_distributiei(varsta,gen,luni)}`
         ],
         "IsUltimul": false
     },
@@ -92,7 +93,7 @@ const TemplateHematologie = (assignedID:string,InputsLined:any, changeInputsline
             "Numarul de reticulocite",
             "",
             "mil./μL",
-            ""
+            `${numarul_de_reticulocite(varsta,gen,luni)}`
         ],
         "IsUltimul": false
     },
@@ -102,7 +103,7 @@ const TemplateHematologie = (assignedID:string,InputsLined:any, changeInputsline
             "Procentul de reticulocite",
             "",
             "%",
-            ""
+            `${procent_reticulocite(varsta,gen,luni)}`
         ],
         "IsUltimul": false
     },
@@ -112,7 +113,7 @@ const TemplateHematologie = (assignedID:string,InputsLined:any, changeInputsline
             "Numar de leucocite",
             "",
             "mii/μL",
-            ""
+            `${numar_de_leucocite(varsta,gen,luni)}`
         ],
         "IsUltimul": false
     },
@@ -122,7 +123,7 @@ const TemplateHematologie = (assignedID:string,InputsLined:any, changeInputsline
             "Procentul de neutrofile",
             "",
             "%",
-            ""
+            `${procentul_de_neutrofile(varsta,gen,luni)}`
         ],
         "IsUltimul": false
     },
@@ -132,7 +133,7 @@ const TemplateHematologie = (assignedID:string,InputsLined:any, changeInputsline
             "Procentul de eozinofile",
             "",
             "%",
-            ""
+            `${procentul_de_eozinofile(varsta,gen,luni)}`
         ],
         "IsUltimul": false
     },
@@ -142,7 +143,7 @@ const TemplateHematologie = (assignedID:string,InputsLined:any, changeInputsline
             "Procentul de bazofile",
             "",
             "%",
-            ""
+            `${procentul_de_bazofile(varsta,gen,luni)}`
         ],
         "IsUltimul": false
     },
@@ -152,7 +153,7 @@ const TemplateHematologie = (assignedID:string,InputsLined:any, changeInputsline
             "Procentul de limfocite",
             "",
             "%",
-            ""
+            `${procentul_de_limfocite(varsta,gen,luni)}`
         ],
         "IsUltimul": false
     },
@@ -162,7 +163,7 @@ const TemplateHematologie = (assignedID:string,InputsLined:any, changeInputsline
             "Procentul de monocite",
             "",
             "%",
-            ""
+            `${procentul_de_monocite(varsta,gen,luni)}`
         ],
         "IsUltimul": false
     },
@@ -172,7 +173,7 @@ const TemplateHematologie = (assignedID:string,InputsLined:any, changeInputsline
             "Numar de neutrofile",
             "",
             "mii/μL",
-            ""
+            `${numar_de_neutrofile(varsta,gen,luni)}`
         ],
         "IsUltimul": false
     },
@@ -182,7 +183,7 @@ const TemplateHematologie = (assignedID:string,InputsLined:any, changeInputsline
             "Numar de eozinofile",
             "",
             "mii/μL",
-            ""
+            `${numar_de_eozinofile(varsta,gen,luni)}`
         ],
         "IsUltimul": false
     },
@@ -192,7 +193,7 @@ const TemplateHematologie = (assignedID:string,InputsLined:any, changeInputsline
             "Numar de bazofile",
             "",
             "mii/μL",
-            ""
+            `${numar_de_bazofile(varsta,gen,luni)}`
         ],
         "IsUltimul": false
     },
@@ -202,7 +203,7 @@ const TemplateHematologie = (assignedID:string,InputsLined:any, changeInputsline
             "Numar de limfocite",
             "",
             "mii/μL",
-            ""
+            `${numar_de_limfocite(varsta,gen,luni)}`
         ],
         "IsUltimul": false
     },
@@ -212,7 +213,7 @@ const TemplateHematologie = (assignedID:string,InputsLined:any, changeInputsline
             "Numar de monocite",
             "",
             "mii/μL",
-            ""
+            `${numar_de_monocite(varsta,gen,luni)}`
         ],
         "IsUltimul": false
     },
@@ -222,7 +223,7 @@ const TemplateHematologie = (assignedID:string,InputsLined:any, changeInputsline
             "Numar de trombocite",
             "",
             "mii/μL",
-            ""
+            `${numar_de_trombocite(varsta,gen,luni)}`
         ],
         "IsUltimul": false
     },
@@ -232,7 +233,7 @@ const TemplateHematologie = (assignedID:string,InputsLined:any, changeInputsline
             "Volumul mediu plachetar",
             "",
             "fL",
-            ""
+            `${volumul_mediu_plachetar(varsta,gen,luni)}`
         ],
         "IsUltimul": false
     },
@@ -242,7 +243,7 @@ const TemplateHematologie = (assignedID:string,InputsLined:any, changeInputsline
             "Distributia plachetelor (trombocitelor)",
             "",
             "fL",
-            ""
+            `${distributia_plachetelor(varsta,gen,luni)}`
         ],
         "IsUltimul": false
     },
@@ -252,7 +253,7 @@ const TemplateHematologie = (assignedID:string,InputsLined:any, changeInputsline
             "VITEZA DE SEDIMENTARE A HEMATIILOR",
             "",
             "mm/h",
-            ""
+            `${viteza_de_sedimentare(varsta,gen,luni)}`
         ],
         "IsUltimul": false
     },
@@ -262,7 +263,7 @@ const TemplateHematologie = (assignedID:string,InputsLined:any, changeInputsline
             "fibrogen",
             "",
             "mg/dL",
-            ""
+            `${fibrogen(varsta,gen,luni)}`
         ],
         "IsUltimul": true
     }

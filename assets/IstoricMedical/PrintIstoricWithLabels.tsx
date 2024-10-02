@@ -7,6 +7,7 @@ import { formularBackground, formularButtonSubmit } from "../color"
 import GetDataForUserIstoricMedical from "./GetDataForUserIstoricMedical"
 import { NativeStackNavigationProp } from "@react-navigation/native-stack"
 import { useNavigation } from "@react-navigation/native"
+import { child, get, getDatabase, ref } from "@react-native-firebase/database"
 
 const DateAndTimeExtractor = (label: string) => {
     const date = label.substr(6, 2) + "/" + label.substr(4, 2) + "/" + label.substr(0, 4)
@@ -16,8 +17,8 @@ const DateAndTimeExtractor = (label: string) => {
 }
 
 const PrintIstoricWithLabels = ({ route }: { route: any }) => {
-    const email = route.params.email
     const userID = route.params.userID
+    const email = route.params.email
 
     const nav = useNavigation<NativeStackNavigationProp<any>>();
 
@@ -65,12 +66,12 @@ const PrintIstoricWithLabels = ({ route }: { route: any }) => {
                         <Text>Data: {date}</Text>
                         <Text>Timpul: {time}</Text>
                     </View>
-                        <TouchableOpacity style={styles.BTNstyle} onPress={() => {
-                            changeChosenPath(folder)
-                            changeShowModal(true)
-                        }}>
-                            <Text style={{ textAlign: 'center' }}>Afiseza</Text>
-                        </TouchableOpacity>
+                    <TouchableOpacity style={styles.BTNstyle} onPress={() => {
+                        changeChosenPath(folder)
+                        changeShowModal(true)
+                    }}>
+                        <Text style={{ textAlign: 'center' }}>Afiseza</Text>
+                    </TouchableOpacity>
                 </View>
             }}
         />
@@ -95,8 +96,8 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         backgroundColor: formularBackground,
         justifyContent: 'center',
-        padding:10,
-        alignSelf:'center',
+        padding: 10,
+        alignSelf: 'center',
     },
     Imgstyle: {
         height: 30,

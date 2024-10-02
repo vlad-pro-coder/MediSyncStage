@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
-import { View, Text, StyleSheet, Image, FlatList, Pressable, Modal } from "react-native"
+import { View, Text, StyleSheet, Image as RImage, FlatList, Pressable, Modal } from "react-native"
+import {Image} from 'expo-image'
 import ZoomableModal from "../zoomableImageInModal/zoomableModal"
 
 interface IMGinfo {
@@ -22,7 +23,7 @@ const PrintComponentFormular = ({ DataToPrint }: any) => {
             let aux: any = {}
             const sizePromises = photosURIs.map((uri: string, index: number) => {
                 return new Promise<void>((resolve, reject) => {
-                    Image.getSize(uri, (width, height) => {
+                    RImage.getSize(uri, (width, height) => {
                         aux[index] = { height, width };
                         resolve();
                     }, reject);
@@ -58,7 +59,8 @@ const PrintComponentFormular = ({ DataToPrint }: any) => {
                 alignSelf: 'center',
                 marginBottom: 10
             }}
-            resizeMode="contain"
+            contentFit="contain"
+            cachePolicy="memory"
             /></Pressable> : <Text>loading...</Text>
     }
 

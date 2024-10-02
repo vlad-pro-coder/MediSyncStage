@@ -1,5 +1,6 @@
+import { acid_uric_seric, alaninaminotransferaza_ALT_GPT_TGP, aspartataminotransferaza_GOT_AST_TGO, calciu_seric, colesterol_HDL, colesterol_LDL, colesterol_total, creatinina_serica, glucoza_serica, rata_estimata_filtrari, trigliceride } from "../../assignDataBasedOnAge"
 
-const TemplateBiochimie = (assignedID:string,InputsLined:any, changeInputslined:any,varsta:number,luni:number) =>{
+const TemplateBiochimie = (assignedID:string,InputsLined:any, changeInputslined:any,varsta:number,luni:number,gen:string) =>{
     const NewTemplateBiochimie = [
         {
             "id": `${assignedID}`,
@@ -23,7 +24,7 @@ const TemplateBiochimie = (assignedID:string,InputsLined:any, changeInputslined:
                 "acid uric seric",
                 "",
                 "mg/dL",
-                ""
+                `${acid_uric_seric(varsta,gen,luni)}`
             ],
             "IsUltimul": false
         },
@@ -33,7 +34,7 @@ const TemplateBiochimie = (assignedID:string,InputsLined:any, changeInputslined:
                 "alaninaminotransferaza(ALT/GPT/TGP)",
                 "",
                 "U/L",
-                ""
+                `${alaninaminotransferaza_ALT_GPT_TGP(varsta,gen,luni)}`
             ],
             "IsUltimul": false
         },
@@ -43,7 +44,7 @@ const TemplateBiochimie = (assignedID:string,InputsLined:any, changeInputslined:
                 "aspartataminotransferaza(GOT/AST/TGO)",
                 "",
                 "U/L",
-                ""
+                `${aspartataminotransferaza_GOT_AST_TGO(varsta,gen,luni)}`
             ],
             "IsUltimul": false
         },
@@ -53,7 +54,7 @@ const TemplateBiochimie = (assignedID:string,InputsLined:any, changeInputslined:
                 "calciu seric",
                 "",
                 "mg/dL",
-                ""
+                `${calciu_seric(varsta,gen,luni)}`
             ],
             "IsUltimul": false
         },
@@ -63,7 +64,7 @@ const TemplateBiochimie = (assignedID:string,InputsLined:any, changeInputslined:
                 "colesterol total",
                 "",
                 "mg/dL",
-                ""
+                `${colesterol_total(varsta,gen,luni)}`
             ],
             "IsUltimul": false
         },
@@ -73,7 +74,7 @@ const TemplateBiochimie = (assignedID:string,InputsLined:any, changeInputslined:
                 "colesterol HDL",
                 "",
                 "mg/dL",
-                ""
+                `${colesterol_HDL(varsta,gen,luni)}`
             ],
             "IsUltimul": false
         },
@@ -83,7 +84,7 @@ const TemplateBiochimie = (assignedID:string,InputsLined:any, changeInputslined:
                 "LDL colesterol",
                 "",
                 "mg/dL",
-                ""
+                `${colesterol_LDL(varsta,gen,luni)}`
             ],
             "IsUltimul": false
         },
@@ -93,7 +94,7 @@ const TemplateBiochimie = (assignedID:string,InputsLined:any, changeInputslined:
                 "Creatinina serica",
                 "",
                 "mg/dL",
-                ""
+                `${creatinina_serica(varsta,gen,luni)}`
             ],
             "IsUltimul": false
         },
@@ -102,8 +103,8 @@ const TemplateBiochimie = (assignedID:string,InputsLined:any, changeInputslined:
             "value": [
                 "Rata estimata a filtrarii glomerulare(eGFR)",
                 "",
-                "ml/min/1.73mp",
-                ""
+                "ml/min",
+                `${rata_estimata_filtrari(varsta,gen,luni)}`
             ],
             "IsUltimul": false
         },
@@ -113,7 +114,7 @@ const TemplateBiochimie = (assignedID:string,InputsLined:any, changeInputslined:
                 "glucoza serica(GLICEMIE)",
                 "",
                 "mg/dL",
-                ""
+                `${glucoza_serica(varsta,gen,luni)}`
             ],
             "IsUltimul": false
         },
@@ -123,7 +124,7 @@ const TemplateBiochimie = (assignedID:string,InputsLined:any, changeInputslined:
                 "trigliceride",
                 "",
                 "mg/dL",
-                ""
+                `${trigliceride(varsta,gen,luni)}`
             ],
             "IsUltimul": true
         }

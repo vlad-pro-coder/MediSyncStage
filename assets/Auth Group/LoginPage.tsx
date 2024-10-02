@@ -10,8 +10,8 @@ const LoginScreen = () => {
   const nav = useNavigation<NativeStackNavigationProp<any>>();
 
   // some useState variables for the input fields
-  const [email, setEmail] = useState("cineva@gmail.com");
-  const [password, setPassword] = useState("123456");
+  const [email, setEmail] = useState("pacient@gmail.com");
+  const [password, setPassword] = useState("Fastman123!");
 
   const goToMainFlow = async () => {
     if (email && password) {
@@ -22,7 +22,8 @@ const LoginScreen = () => {
         );
         if (response.user) {
           // At this point the user is logged in
-          nav.replace("Home", { userID: response.user.uid} )
+          console.log("--->" + response.user.uid)
+          nav.replace("Index", {userID: response.user.uid,email:email} )
         }
       } catch (e: any) {
         // just log the error now, if there is one but were gonna have to make a better error logger in the future

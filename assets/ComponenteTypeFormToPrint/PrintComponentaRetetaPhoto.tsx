@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { View,Image,Text,StyleSheet, Modal, Pressable } from "react-native";
+import { View,Text,StyleSheet, Modal, Pressable,Image as RImage } from "react-native";
 import ZoomableModal from "../zoomableImageInModal/zoomableModal";
+import {Image} from "expo-image"
 
 interface IMGinfo {
     width: number,
@@ -18,7 +19,7 @@ const PrintComponentaRetetaPhoto = ({prop}:any) =>{
     const [SelectedURI, changeURI] = useState<string>('')
 
     useEffect(()=>{
-        Image.getSize(uri, (width, height) => {
+        RImage.getSize(uri, (width, height) => {
             setImageSizes({ height, width })
         });
     },[])
@@ -45,7 +46,7 @@ const PrintComponentaRetetaPhoto = ({prop}:any) =>{
                 width: containerWidth * 1+10, // 100% of the container width
                 height: (containerWidth * 1+10) * aspectRatio,
             }}
-            resizeMode="contain"/></Pressable>:<Text>loading...</Text>
+            contentFit="contain" cachePolicy="memory" /></Pressable>:<Text>loading...</Text>
         }
     </View>
 

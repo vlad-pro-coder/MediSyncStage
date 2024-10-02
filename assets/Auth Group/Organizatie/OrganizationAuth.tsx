@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import LoginScreen from '../LoginPage';
-import RegisterScreen from '../RegisterPage';
+import RegisterScreen from './OrganisationRegister';
 import { getAuth } from "firebase/auth";
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';

@@ -1,5 +1,6 @@
+import { tsh } from "../../assignDataBasedOnAge"
 
-const TemplateImunologie = (assignedID:string,InputsLined:any, changeInputslined:any,varsta:number,luni:number) =>{
+const TemplateImunologie = (assignedID:string,InputsLined:any, changeInputslined:any,varsta:number,luni:number,gen:string) =>{
     const NewTemplateImunologie = [
         {
             "id": `${assignedID}`,
@@ -23,7 +24,7 @@ const TemplateImunologie = (assignedID:string,InputsLined:any, changeInputslined
                 "TSH(hormon de stimulare tiroidiana)",
                 "",
                 "µUI/mL",
-                ""
+                `${tsh(varsta,gen,luni)}`
             ],
             "IsUltimul": true
         }

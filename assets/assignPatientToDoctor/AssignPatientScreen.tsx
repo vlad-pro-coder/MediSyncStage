@@ -1,18 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { View, TextInput, Button, Text, StyleSheet, FlatList, TouchableOpacity, Alert } from 'react-native';
-import assignPatientToDoctor from './assignPage';
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useNavigation } from '@react-navigation/native';
 import auth from "@react-native-firebase/auth";
 import db from "@react-native-firebase/database";
 
-const App = () => {
+const AssignPacientToDoctor = () => {
   const nav = useNavigation<NativeStackNavigationProp<any>>();
   const [nrTelefon, setNrTelefon] = useState<string>('');
-  const [CNP, setCNP] = useState<string | null>(null);
-  const [name, setName] = useState<string | null>(null);
-  const [surName, setSurName] = useState<string | null>(null);
-  const [email, setEmail] = useState<string | null>(null);
 
   const addPacient = async () => {
     try {
@@ -143,12 +138,6 @@ const App = () => {
       <TouchableOpacity onPress={showPacientList} style={[styles.button, styles.googleButton]}>
         <Text style={styles.buttonText}>Show Your Patient List</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => nav.push("Home")} style={[styles.button, styles.googleButton]}>
-        <Text style={styles.buttonText}>Return Home</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => nav.push("Auth")} style={[styles.button, styles.googleButton]}>
-        <Text style={styles.buttonText}>Return To Login</Text>
-      </TouchableOpacity>
     </View>
   );
 };
@@ -193,4 +182,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+export default AssignPacientToDoctor;

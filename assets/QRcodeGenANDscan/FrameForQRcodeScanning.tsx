@@ -1,5 +1,5 @@
-import { CameraView, useCameraPermissions } from 'expo-camera';
-import { useState } from 'react';
+import { CameraView, useCameraPermissions, Camera } from 'expo-camera';
+import { useEffect, useState } from 'react';
 import React, { Button, StyleSheet, Text, View } from 'react-native';
 import { getDatabase, ref, get, set } from "firebase/database";
 import TemporaryDataDisplayWithLabels from './PrintIstoricTemporary/TemporaryDataDisplayWithLabels';
@@ -15,21 +15,24 @@ const strParser = (scannedSTR: string) => {
 }
 
 const FrameForQRcodeScanner = () => {
-  const [permission, requestPermission] = useCameraPermissions();
+  const [permission, requestPermission] = useState<boolean | null>();
   const [scanned, changeScanned] = useState<boolean>(false)
   const [dataScanned, changeDataScanned] = useState<string>('')
 
-  if (!permission) {
-    return <View><Text>Permisiunea a fost refuzata</Text></View>;
-  }
+  useEffect(() => {
+    (async () => {
+      const { status } = await Camera.requestCameraPermissionsAsync();
+      requestPermission(status === 'granted');
+    })();
+  }, [])
 
-  if (!permission.granted) {
-    return (
-      <View>
-        <Text >Accepta permisiunile pentru a scana codul QR</Text>
-        <Button onPress={requestPermission} title="grant permission" />
-      </View>
-    );
+  if (!permission) {
+    return <View style={{ flex: 1, alignSelf: 'center', justifyContent: 'center' }}>
+      <Text style={{
+        fontSize: 20,
+        fontWeight: 'bold',
+      }}>Fara access la camera foto, oferiti permisiunile din setarile telefonului</Text>
+    </View>;
   }
 
   const getQRStatus = async (userID: any) => {
@@ -52,7 +55,7 @@ const FrameForQRcodeScanner = () => {
 
   const getQRdata = async ({ type, data }: any) => {
     const { email, userID } = strParser(data)
-    console.log(email,userID)
+    console.log(email, userID)
     const statusQR = await getQRStatus(userID)
 
     if (statusQR) {
@@ -74,8 +77,8 @@ const FrameForQRcodeScanner = () => {
       }}
       onBarcodeScanned={getQRdata}
     >
-      {dataScanned === "0" ? <Text style={styles.expiredPopUp}>QR expirat sau scanat deja</Text> : <></>}
-    </CameraView> : <TemporaryDataDisplayWithLabels prop={{email:dataScanned}}/>
+      {dataScanned === "0" ? <Text style={styles.expiredPopUp}>QR expirat sau deja scanat</Text> : <></>}
+    </CameraView> : <TemporaryDataDisplayWithLabels prop={{ email: dataScanned }} />
     }
   </View>
 

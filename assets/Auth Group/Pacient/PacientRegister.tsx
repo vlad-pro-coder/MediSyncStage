@@ -23,7 +23,7 @@ const PacientRegister = () => {
     // to do later, will add stuff to firestore realtime database
     // now i just made a user autentithication system
     // to see how to do this visit https://www.youtube.com/watch?v=mZlKwRV4MC8
-    db().ref(`/users/${response.user.uid}`).set({ CNP, nrTelefon, name, surName, email, isDoctor });
+    db().ref(`/users/${response.user.uid}`).set({ CNP, nrTelefon, name, surName, email, accountType: "pacient" });
   }
 
   const registerAndGoToMainFlow = async (response: any) => {
@@ -37,7 +37,7 @@ const PacientRegister = () => {
         if (response.user) {
           console.log(response.user.uid)
           await createProfile(response);
-          nav.replace("Home", { userID: response.user.uid} )
+          nav.replace("Index", {userID: response.user.uid})
         }
 
       } catch (e: any) {

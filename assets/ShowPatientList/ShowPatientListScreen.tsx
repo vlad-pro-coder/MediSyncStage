@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, TextInput, Button, Text, StyleSheet, FlatList, Alert, Pressable, Image } from 'react-native';
+import { View, TextInput, Button, Text, StyleSheet, FlatList, TouchableOpacity, Alert, Pressable, Image, ActivityIndicator } from 'react-native';
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useNavigation } from '@react-navigation/native';
 import auth from "@react-native-firebase/auth";
@@ -7,7 +7,7 @@ import db from "@react-native-firebase/database";
 import '@react-native-firebase/database';
 import * as ImagePicker from 'expo-image-picker';
 
-const PacientSelector = () => {
+const App = () => {
   const nav = useNavigation<NativeStackNavigationProp<any>>();
   const PatientListScreen = () => {
     const [patients, setPatients]: any = useState([]);
@@ -60,17 +60,6 @@ const PacientSelector = () => {
 
     const handlePatientPress = (patient: any) => {
       setSelectedPatient(patient); // Set the selected patient
-    };
-
-    const handleFormAction = () => {
-      if (selectedPatient) {
-        // Perform an action with the selected patient
-        Alert.alert('Selected Patient', `You selected: ${selectedPatient.name} ${selectedPatient.surName}`);
-        nav.replace("FormularOrReteta",{  email:selectedPatient.email, userID: selectedPatient.id })
-        // You can navigate to another screen or perform another action here
-      } else {
-        Alert.alert('No patient selected', 'Please select a patient first.');
-      }
     };
 
     const selectAndSaveImage = async (user: any) => {
@@ -133,7 +122,7 @@ const PacientSelector = () => {
           <Text style={styles.nameText}>{item.name} {item.surName}</Text>
           <Text style={styles.detailsText}>{item.nrTelefon}</Text>
           <Text style={styles.detailsText}>{item.email}</Text>
-          <Button title="Profil" onPress={() =>  Alert.alert('Selectat', `${item.name}`) /*nav.push("ProfilePage") */ }  />
+          <Button title="Profil" onPress={() => nav.push("Profile") }  />
         </Pressable>
       );
     };
@@ -154,23 +143,24 @@ const PacientSelector = () => {
       <View style={styles.container}>
         <TextInput
           style={styles.searchBar}
-          placeholder="Search by email"
+          placeholder="Caută după Email"
           value={searchQuery}
           onChangeText={handleSearch}
         />
-        {searchQuery !== ""?<FlatList
+        <FlatList
           data={filteredPatients}
           keyExtractor={(item: any) => item.id}
           renderItem={renderItem}
           contentContainerStyle={styles.listContainer1}
-        />:<FlatList
+        />
+        <FlatList
           data={patients}
           extraData={patientRefresh}
           keyExtractor={(item: any) => item.id}
           renderItem={renderItem}
           contentContainerStyle={styles.listContainer2}
-        />}
-        <Pressable style={styles.formButton} onPress={handleFormAction}>
+        />
+        <Pressable style={styles.formButton} onPress={() => nav.push("")}>
           <Text style={styles.formButtonText}>Accesează Formular</Text>
         </Pressable>
       </View>
@@ -226,14 +216,13 @@ const PacientSelector = () => {
     },
     formButton: {
       position: 'absolute',
-      bottom: 20,
+      bottom: 70,
       left: 20,
       right: 20,
       backgroundColor: '#007AFF',
       padding: 15,
       borderRadius: 10,
       alignItems: 'center',
-      marginBottom:75,
     },
     formButtonText: {
       color: '#fff',
@@ -264,4 +253,5 @@ const PacientSelector = () => {
     </View>
   );
 };
-export default PacientSelector;
+export default App;
+

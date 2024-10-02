@@ -51,7 +51,7 @@ const AfiseazaReteteTreptatIstoric = ({ DataToPrint }: any) => {
                                 </TouchableOpacity> :
                                 <></>
                             }
-                            <View style={{flex:1,flexDirection:'row',marginBottom:15}}>
+                            <View style={{flex:1,flexDirection:'row',marginBottom:15,marginLeft:DeleteMode === true?15:0}}>
                                 <View style={{borderRadius:30,width:'80%'}}>
                                     {value.uri===undefined?
                                     <PrintComponentReteta DataToPrint={{ masterInputs: value }} />:

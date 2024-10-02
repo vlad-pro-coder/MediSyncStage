@@ -35,7 +35,8 @@ type Props = NativeStackScreenProps<RootStackParamList, 'SelectDoctor'>;
 function SelectDoctorScreen({ route, navigation }: Props) {
     const [doctors, setDoctors] = useState<Doctor[]>([]);
     const [limit, setLimit] = useState(100);
-    const [userID, setUserID] = useState(route.params.userID)
+
+    const userID = route.params.userID
 
 
     useEffect(() => {

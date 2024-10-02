@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "MediSync",
-    "slug": "dpit",
+    "slug": "medisync",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -50,9 +50,9 @@
     ],
     "extra": {
       "eas": {
-        "projectId": "6c6f68be-8d71-4fd3-aa63-fa008fa6c12d"
+        "projectId": "8b3aa561-4424-4554-b5d5-3c313449e6ad"
       }
     },
-    "owner": "no0byeby"
+    "owner": "mariusdarius"
   }
 }

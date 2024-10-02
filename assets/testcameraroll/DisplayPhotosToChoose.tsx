@@ -34,6 +34,14 @@ const DisplayPhotosToChoose = ({ route }: { route: any }) => {
   /// 0:URIsForFormular
   /// 1:URIsRetete
 
+  const retryRequest = async () => {
+    const { status } = await MediaLibrary.requestPermissionsAsync();
+    setHasPermission(status === 'granted');
+    if (status === 'granted') {
+      loadPhotos();
+    }
+  }
+
   useEffect(() => {
     (async () => {
       const { status } = await MediaLibrary.requestPermissionsAsync();
@@ -58,10 +66,17 @@ const DisplayPhotosToChoose = ({ route }: { route: any }) => {
   }, [after, hasNextPage]);
 
   if (hasPermission === null) {
-    return <View><Text>Requesting permissions...</Text></View>;
+    return <View>
+      <Text>Requesting permissions...</Text>
+    </View>;
   }
   if (hasPermission === false) {
-    return <View><Text>No access to media library</Text></View>;
+    return <View style={{ flex:1,alignSelf: 'center', justifyContent: 'center' }}>
+      <Text style={{
+    fontSize: 20,
+    fontWeight: 'bold',
+  }}>Fara access la libraria de poze, oferiti permisiunile din setarile telefonului</Text>
+    </View>;
   }
 
   const FindIndex = (id: string) => {
@@ -103,10 +118,10 @@ const DisplayPhotosToChoose = ({ route }: { route: any }) => {
         <TextInput placeholder="Titlu document" value={titlu} onChangeText={(text: string) => { changeTitlu(text) }} style={styles.titlu} onFocus={() => { changeFocus(true) }} onBlur={() => { changeFocus(false) }} />
         <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-evenly', marginTop: 10 }}>
           <TouchableOpacity style={styles.btnStyle} onPress={() => { changeState(0) }}>
-            <Text style={styles.textstyle}>Adauga pentru formular</Text>
+            <Text style={styles.textstyle}>Adauga Poze pentru formular</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.btnStyle} onPress={() => { changeState(1) }}>
-            <Text style={styles.textstyle}>Adauga Reteta</Text>
+            <Text style={styles.textstyle}>Adauga Poze pentru Retete</Text>
           </TouchableOpacity>
         </View>
         {focusedTitlu === false ? <Text style={[styles.textstyle, { paddingBottom: '10%' }]}>{AddFormOrReteta === 0 ? "acum se adauga imagini Formularului" : "acum se adauga Reteta sub forma de poze"}</Text> : <></>}
@@ -122,11 +137,11 @@ const DisplayPhotosToChoose = ({ route }: { route: any }) => {
           onEndReachedThreshold={0.5}
         />
       </View>
-      <View style={{height:'8%',justifyContent:'center'}}>
-        <TouchableOpacity style={styles.submit} onPress={()=>{
-          SubmitPhotos({titlu,URIs,email})
+      <View style={{ height: '8%', justifyContent: 'center' }}>
+        <TouchableOpacity style={styles.submit} onPress={() => {
+          SubmitPhotos({ titlu, URIs, email })
           nav.pop()
-      }}>
+        }}>
           <Text style={styles.textstyle}>Creeaza Formular</Text>
         </TouchableOpacity>
       </View>
@@ -166,7 +181,7 @@ const styles = StyleSheet.create({
     width: 100,
     height: 40,
     borderRadius: 10,
-},
+  },
 })
 
 export default DisplayPhotosToChoose

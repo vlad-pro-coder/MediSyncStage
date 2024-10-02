@@ -9,7 +9,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import FromLinearToNested from "./TransformerFunctions/FromLinearToNested";
 import ModalSelectorWithLabels from "./ModalSelector/ModalSelectorWithLabels";
 import StoreImportedImages from "./StoreImportedImages";
-import ConvertTimeToString from "../ConvertTimeToString";
+import ConvertTimeToString from "../ConvertTimeToString"
 import { getDatabase, onValue, ref } from "firebase/database";
 
 const GetCurrDate = () => {
@@ -116,7 +116,7 @@ const ChooseWhich = ({ route }: { route: any }) => {
                     , ListaImageUris: ListaImageUris
                     , changeListaImageUris: changeListaImageUris
                     , agemonth: ConvertCNPToAge(CNP.toString())
-                    , Gen: ConvertCNPToGender(CNP.toString())
+                    , gen: ConvertCNPToGender(CNP.toString())
                 }} />
                 : <Prescriptie prop={{
                     inputs: inputsReteta

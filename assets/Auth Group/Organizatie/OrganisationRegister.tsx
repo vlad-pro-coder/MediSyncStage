@@ -9,12 +9,14 @@ import { ScrollView, Switch } from 'react-native-gesture-handler';
 // Rendered conditionally in AuthPage
 
 const OrganisationRegister = () => {
-  const [CNP, setCNP] = useState("6150716016696");
   const [nrTelefon, setNrTelefon] = useState("+40754213564")
   const [name, setName] = useState("Marius");
   const [surName, setSurName] = useState("Popescu");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [accountType, setAccountType] = useState("organisation");
+  const [judet, setJudet] = useState(null);
+  const [localitate, setLocalitate] = useState(null);
 
   const nav = useNavigation<NativeStackNavigationProp<any>>();
 
@@ -22,7 +24,7 @@ const OrganisationRegister = () => {
     // to do later, will add stuff to firestore realtime database
     // now i just made a user autentithication system
     // to see how to do this visit https://www.youtube.com/watch?v=mZlKwRV4MC8
-    db().ref(`/users/${response.user.uid}`).set({ CNP, nrTelefon, name, surName, email, accountType: "Organsation",  });
+    db().ref(`/users/${response.user.uid}`).set({ nrTelefon, name, surName, email, judet, localitate, doctori: [{}] });
   }
 
   const registerAndGoToMainFlow = async (response: any) => {
@@ -36,7 +38,7 @@ const OrganisationRegister = () => {
         if (response.user) {
           console.log(response.user.uid)
           await createProfile(response);
-          nav.replace("Home")
+          nav.replace("Index", {userID: response.user.uid})
         }
 
       } catch (e: any) {
@@ -50,39 +52,12 @@ const OrganisationRegister = () => {
     <View style={styles.container}>
       <Image
         style={styles.imageStyle}
-        source={require('../Obiecte.png')}
+        source={require('../../Obiecte.png')}
       />
       <Text style={styles.subtitle}> {"    < "}Inapoi la pagina principala</Text>
       <Text style={styles.title}>Bine ati revenit!</Text>
       <View style={{ flex: 2, justifyContent: "center" }}>
       <TextInput
-          style={styles.input}
-          placeholder="Name"
-          autoCapitalize="none"
-          autoCorrect={false}
-          value={name}
-          onChangeText={setName}
-        />
-
-        <TextInput
-          style={styles.input}
-          placeholder="CNP"
-          autoCapitalize="none"
-          autoCorrect={false}
-          value={CNP}
-          onChangeText={setCNP}
-        />
-
-        <TextInput
-          style={styles.input}
-          placeholder="Numar Telefon"
-          autoCapitalize="none"
-          autoCorrect={false}
-          value={nrTelefon}
-          onChangeText={setNrTelefon}
-        />
-
-        <TextInput
           style={styles.input}
           placeholder="Name"
           autoCapitalize="none"
@@ -102,6 +77,15 @@ const OrganisationRegister = () => {
 
         <TextInput
           style={styles.input}
+          placeholder="Numar Telefon"
+          autoCapitalize="none"
+          autoCorrect={false}
+          value={nrTelefon}
+          onChangeText={setNrTelefon}
+        />
+
+        <TextInput
+          style={styles.input}
           placeholder="Email"
           autoCapitalize="none"
           autoCorrect={false}
@@ -117,6 +101,7 @@ const OrganisationRegister = () => {
           value={password}
           onChangeText={setPassword}
         />
+
         <View>
           <TouchableOpacity style={styles.button} onPress={registerAndGoToMainFlow}>
             <Text style={styles.buttonText}>Login</Text>

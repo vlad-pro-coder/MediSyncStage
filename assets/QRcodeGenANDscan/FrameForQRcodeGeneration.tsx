@@ -6,8 +6,8 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 declare global {
-    var interval: NodeJS.Timeout;
-    var dbListener: () => void;
+  var interval: NodeJS.Timeout;
+  var dbListener: () => void;
 }
 
 const FrameForQRcodeGeneration = ({ route }: { route: any }) => {
@@ -31,23 +31,27 @@ const FrameForQRcodeGeneration = ({ route }: { route: any }) => {
     }
   }
 
-  
+
 
   useEffect(() => {
+
+    let hasPopped = false;
     const wait30sec = async () => {
       await changeQRstate(true)
 
       const dbRef = getDatabase();
       globalThis.dbListener = onValue(ref(dbRef, `users/${userID}/IsQRactive`), (snapshot) => {
         const data: boolean = snapshot.val();
-        if (data === false) {
+        if (data === false && !hasPopped) {
+          hasPopped = true;
           nav.pop();
         }
       });
 
       globalThis.interval = setInterval(() => {
         changeSeconds(prevSeconds => {
-          if (prevSeconds <= 1) {
+          if (prevSeconds <= 1 && !hasPopped) {
+            hasPopped = true;
             nav.pop();
           }
           return prevSeconds - 1
@@ -57,8 +61,9 @@ const FrameForQRcodeGeneration = ({ route }: { route: any }) => {
     }
     wait30sec()
 
-    return ()=>{
-      const cleanup = async() =>{
+    return () => {
+      const cleanup = async () => {
+        hasPopped = true
         await changeQRstate(false)
         clearInterval(globalThis.interval)
         globalThis.dbListener()
@@ -70,14 +75,14 @@ const FrameForQRcodeGeneration = ({ route }: { route: any }) => {
 
   return (
     <View>
-      <View style={{height:'100%',alignItems:'center',justifyContent:'center'}}>
-      <QRCode
-        value={email + " " + userID}
-        size={300}
-        backgroundColor="white"
-        color="black"
-      />
-      <Text>{secondsPast}</Text>
+      <View style={{ height: '100%', alignItems: 'center', justifyContent: 'center' }}>
+        <QRCode
+          value={email + " " + userID}
+          size={300}
+          backgroundColor="white"
+          color="black"
+        />
+        <Text>{secondsPast}</Text>
       </View>
     </View>
   );
