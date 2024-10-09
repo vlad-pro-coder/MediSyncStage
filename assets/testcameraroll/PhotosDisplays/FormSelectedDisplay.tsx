@@ -16,9 +16,9 @@ const FormSelectedDisplay = ({ prop }: any) => {
         setLastTap(now);
     }
 
-    return <Pressable onPress={doubletap} style={{ width: '33.333%',backgroundColor:'lightblue' }}>
-        <Text>{index+1}</Text>
-        <Image source={{ uri: uri }} style={{ width: 100, height: 100 }} />
+    return <Pressable onPress={doubletap} style={{ width: '33.333%',backgroundColor:'lightblue', borderRadius:10 }}>
+        <Text style={{textAlign:'center'}}>{index+1}</Text>
+        <Image source={{ uri: uri }} style={{ width: 100, height: 100,alignSelf:"center" }} />
     </Pressable>
 }
 export default FormSelectedDisplay

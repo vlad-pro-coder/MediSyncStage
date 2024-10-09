@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { View, Text, FlatList, Image, ListRenderItem, StyleSheet, TouchableOpacity, Pressable } from 'react-native';
+import { View, Text, FlatList, Image, ListRenderItem, StyleSheet, TouchableOpacity, Pressable, Alert } from 'react-native';
 import * as MediaLibrary from 'expo-media-library';
 import { TextInput } from 'react-native-gesture-handler';
 import { formularButtonSubmit, inputsBackground, inputsEdges } from '../color';
@@ -114,6 +114,11 @@ const DisplayPhotosToChoose = ({ route }: { route: any }) => {
 
   return (
     <View style={{ backgroundColor: 'white' }}>
+      <View style={{height:0,marginTop:30,marginLeft:20}}>
+        <TouchableOpacity onPress={()=>{Alert.alert('Folosire:',"-apasam o data pentru selectarea imaginii \n -de doua ori rapid pentru al deselecta \n -de preferat un titlu sugestiv pentru doctor");}}>
+          <Image source={require('../icons/Icon-round-Question_mark.svg.png')} style={{height:40,width:40}}/>
+        </TouchableOpacity>
+      </View>
       <View style={{ height: '30%', marginTop: 30 }}>
         <TextInput placeholder="Titlu document" value={titlu} onChangeText={(text: string) => { changeTitlu(text) }} style={styles.titlu} onFocus={() => { changeFocus(true) }} onBlur={() => { changeFocus(false) }} />
         <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-evenly', marginTop: 10 }}>
@@ -127,7 +132,7 @@ const DisplayPhotosToChoose = ({ route }: { route: any }) => {
         {focusedTitlu === false ? <Text style={[styles.textstyle, { paddingBottom: '10%' }]}>{AddFormOrReteta === 0 ? "acum se adauga imagini Formularului" : "acum se adauga Reteta sub forma de poze"}</Text> : <></>}
       </View>
 
-      <View style={{ height: '58%', alignItems: 'center' }}>
+      <View style={{ height: '53%', alignItems: 'center' }}>
         <FlatList
           data={photos}
           numColumns={3}

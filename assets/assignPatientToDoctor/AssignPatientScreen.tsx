@@ -1,12 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { View, TextInput, Button, Text, StyleSheet, FlatList, TouchableOpacity, Alert } from 'react-native';
-import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { useNavigation } from '@react-navigation/native';
+import React, { useState } from 'react';
+import { View, TextInput, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import auth from "@react-native-firebase/auth";
 import db from "@react-native-firebase/database";
 
 const AssignPacientToDoctor = () => {
-  const nav = useNavigation<NativeStackNavigationProp<any>>();
   const [nrTelefon, setNrTelefon] = useState<string>('');
 
   const addPacient = async () => {
@@ -21,6 +18,7 @@ const AssignPacientToDoctor = () => {
       const data = snapshot.val();
       if (data) {
         const userId = Object.keys(data)[0];
+        console.log(data,userId)
         const pacient = data[userId];
         Alert.alert(pacient.email);
         const doctorIds = pacient.doctorIds || [];

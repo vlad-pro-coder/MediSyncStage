@@ -10,9 +10,8 @@ const DefaultDisplay = ({prop}:any) =>{
             changeURIs({0:[...URIs[0]],1:[...URIs[1],{id:id,uri:uri}]})
     }
 
-    return <Pressable onPress={SelectionFunc} style={{width:'33.333%'}}>
-        <View style={{height:19}}></View>
-    <Image source={{ uri: uri }} style={{ width: 100, height: 100}} />
+    return <Pressable onPress={SelectionFunc} style={{width:'33.333%',marginTop:19}}>
+    <Image source={{ uri: uri }} style={{ width: 100, height: 100,alignSelf:"center"}} />
   </Pressable>
 }
 export default DefaultDisplay

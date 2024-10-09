@@ -102,7 +102,7 @@ function HomeScreen({ route, navigation }: Props) {
           <View style={styles.iconContainer}>
             <Image source={require("../qrcode.png")} style={styles.qrIcon} />
           </View>
-          <Text style={styles.scanText}>Scanează cardul de sănătate</Text>
+          <Text style={styles.scanText}>Scanează cod QR pentru afisarea istoricului medical</Text>
         </TouchableOpacity>:<></>}
       </View>
 

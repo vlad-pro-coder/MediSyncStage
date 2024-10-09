@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "723071844192",
+    "firebase_url": "https://medisync-4ec40-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "medisync-4ec40",
+    "storage_bucket": "medisync-4ec40.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:723071844192:android:be8841da967fd3b8df2805",
+        "android_client_info": {
+          "package_name": "com.medsupport.medisync"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-lU28AN7mwiMgB5K9A7kYx9Fv9nFOX9c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

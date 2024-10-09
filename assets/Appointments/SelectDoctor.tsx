@@ -1,17 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { View, TextInput, Button, StyleSheet, ScrollView, TouchableOpacity, Text } from 'react-native';
-import {
-    getFirestore, collection, onSnapshot,
-    addDoc, deleteDoc, doc,
-    query, where,
-    getDocs,
-    snapshotEqual
-} from 'firebase/firestore';
-import { firebase, FirebaseDatabaseTypes } from '@react-native-firebase/database';
+import {  getDatabase, ref, onValue } from 'firebase/database';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import db from "@react-native-firebase/database";
 
 // TODO: Replace the following with your app's Firebase project configuration
+
+declare global {
+    var unsub: () => void;
+  }
 
 type RootStackParamList = {
     StartPage: undefined;
@@ -34,31 +30,26 @@ type Props = NativeStackScreenProps<RootStackParamList, 'SelectDoctor'>;
 
 function SelectDoctorScreen({ route, navigation }: Props) {
     const [doctors, setDoctors] = useState<Doctor[]>([]);
-    const [limit, setLimit] = useState(100);
 
     const userID = route.params.userID
 
 
     useEffect(() => {
-        db()
-            .ref('users')
-            .orderByChild('isDoctor')
-            .equalTo(true)
-            .limitToFirst(limit)
-            .on('value', onDoctorUpdate);
+        const fetchdata = async () =>{
+            const dbRef = getDatabase();
+        const path = ref(dbRef,`/users/${userID}/doctorIds`)
 
-    }, [limit])
-
-    const onDoctorUpdate = (snapshot: FirebaseDatabaseTypes.DataSnapshot) => {
-        if (snapshot.val()) {
-            const values: Doctor[] = Object.values(snapshot.val()).map((doctor: any) => ({
-                ...doctor,
-                uid: doctor.uid,
-            }));
-            setDoctors(values)
-        }
+        globalThis.unsub = onValue(path, (snapshot) => {
+            const data = snapshot.val();
+            console.log(data);
+        })
     }
+    fetchdata();
 
+        return ()=>{
+            globalThis.unsub()
+        }
+    }, [])
 
 
     return (
